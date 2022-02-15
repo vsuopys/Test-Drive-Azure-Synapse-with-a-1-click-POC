@@ -5,6 +5,9 @@
 		"workspaceName": {
 			"value": "vvssjupq6khjbr7mpocws1"
 		},
+		"DemoDB_connectionString": {
+			"value": ""
+		},
 		"TripFaresSynapseAnalyticsLinkedService_connectionString": {
 			"value": ""
 		},
