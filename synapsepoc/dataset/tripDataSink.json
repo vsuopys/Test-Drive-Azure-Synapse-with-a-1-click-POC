@@ -5,12 +5,12 @@
 			"referenceName": "TripFaresDataLakeStorageLinkedService",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"keyVaultName": {
-					"value": "@dataset().keyVaultName",
-					"type": "Expression"
-				},
 				"datalakeAccountName": {
 					"value": "@dataset().datalakeAccountName",
+					"type": "Expression"
+				},
+				"keyVaultName": {
+					"value": "@dataset().keyVaultName",
 					"type": "Expression"
 				}
 			}
