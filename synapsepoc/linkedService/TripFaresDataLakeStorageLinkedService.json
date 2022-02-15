@@ -2,11 +2,13 @@
 	"name": "TripFaresDataLakeStorageLinkedService",
 	"properties": {
 		"parameters": {
-			"keyVaultName": {
-				"type": "string"
-			},
 			"datalakeAccountName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "vvssjupq6khjbr7mpoc"
+			},
+			"keyVaultName": {
+				"type": "string",
+				"defaultValue": "kvvvssjupq6khjbr7mpoc"
 			}
 		},
 		"annotations": [],
