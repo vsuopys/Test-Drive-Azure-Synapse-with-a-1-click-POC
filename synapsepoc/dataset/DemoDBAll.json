@@ -1,0 +1,15 @@
+{
+	"name": "DemoDBAll",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DemoDB",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "MyDemoSourceDB"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
