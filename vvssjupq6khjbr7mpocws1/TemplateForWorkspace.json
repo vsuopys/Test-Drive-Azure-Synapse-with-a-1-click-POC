@@ -515,7 +515,7 @@
 					},
 					"SQLDedicatedPoolName": {
 						"type": "string",
-						"defaultValue": "vvssjupq6khjbr7mpocws1.sql.azuresynapse.net"
+						"defaultValue": "vvssjupq6khjbr7mpocws1p1"
 					},
 					"SQLLoginUsername": {
 						"type": "string",
@@ -1149,16 +1149,20 @@
 			"properties": {
 				"parameters": {
 					"SynapseWorkspaceName": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "vvssjupq6khjbr7mpocws1.database.windows.net"
 					},
 					"SQLDedicatedPoolName": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "vvssjupq6khjbr7mpocws1p1"
 					},
 					"keyVaultName": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "kvvvssjupq6khjbr7mpoc"
 					},
 					"SQLLoginUsername": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "cloudsa"
 					}
 				},
 				"annotations": [],
@@ -1650,6 +1654,15 @@
 			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/ws1sparkpool1')]",
+			"type": "Microsoft.Synapse/workspaces/bigDataPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": []
+			},
 			"dependsOn": []
 		}
 	]
