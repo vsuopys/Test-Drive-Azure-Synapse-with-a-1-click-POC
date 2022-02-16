@@ -1,0 +1,228 @@
+{
+	"name": "Create_Customer",
+	"properties": {
+		"folder": {
+			"name": "Facilities"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "ws1sparkpool1",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "aaaf8187-af58-463d-9bc7-42c824a3d034"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "python"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/2ba972e5-d964-4ff6-9b9b-bf89377f4391/resourceGroups/rg-1click/providers/Microsoft.Synapse/workspaces/vvssjupq6khjbr7mpocws1/bigDataPools/ws1sparkpool1",
+				"name": "ws1sparkpool1",
+				"type": "Spark",
+				"endpoint": "https://vvssjupq6khjbr7mpocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 5,
+				"cores": 8,
+				"memory": 56,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"%%pyspark\n",
+					"\n",
+					"import pyspark.sql.functions as F\n",
+					"from pyspark.sql.types import StringType\n",
+					"import uuid\n",
+					"\n",
+					"numberOfLocations = 10\n",
+					"data_path = spark.read.load([\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_1.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_10.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_11.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_2.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_3.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_4.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_5.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_6.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_7.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_8.csv',\n",
+					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_9.csv'\n",
+					"    ], format='csv'\n",
+					"## If header exists uncomment line bellow\n",
+					", header=True\n",
+					")\n",
+					"#data_path.show(100)\n",
+					"customer = data_path.select('CustomerId','Age','ZipCode','FirstName','LastName','DateOfBirth','Email','Address','Gender')\n",
+					"finalCustomer = customer.withColumn (\n",
+					"    \"Location-ID\",\n",
+					"    F.array(\n",
+					"        F.lit(\"location-id-1\"),\n",
+					"        F.lit(\"location-id-2\"),\n",
+					"        F.lit(\"location-id-3\"),\n",
+					"        F.lit(\"location-id-4\"),\n",
+					"        F.lit(\"location-id-5\"),\n",
+					"        F.lit(\"location-id-6\"),\n",
+					"        F.lit(\"location-id-7\"),\n",
+					"        F.lit(\"location-id-8\"),\n",
+					"        F.lit(\"location-id-9\"),\n",
+					"        F.lit(\"location-id-10\")\n",
+					"    ).getItem(\n",
+					"    (F.rand()*10).cast(\"int\")\n",
+					"  )\n",
+					").withColumnRenamed('Address','HomeAddress')"
+				],
+				"execution_count": 3
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"finalCustomer.write.format('parquet').mode('overwrite').save(\"abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Stage/Customer/Customers\")"
+				],
+				"execution_count": 9
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"finalCustomer.write.format('parquet').mode('overwrite').save(\"abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/acltest/Customers\")"
+				],
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"diagram": {
+						"activateDiagramType": 1,
+						"chartConfig": {
+							"category": "bar",
+							"keys": [],
+							"values": [],
+							"yLabel": "",
+							"xLabel": "",
+							"aggregation": "SUM",
+							"aggByBackend": false
+						},
+						"aggData": "{}",
+						"isSummary": false,
+						"previewData": {
+							"filter": null
+						},
+						"isSql": true
+					}
+				},
+				"source": [
+					"%%sql\n",
+					"DROP TABLE tenants"
+				],
+				"execution_count": 11
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "sparksql"
+					}
+				},
+				"source": [
+					"%%sql\n",
+					"CREATE DATABASE testdom"
+				],
+				"execution_count": 7
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"diagram": {
+						"activateDiagramType": 1,
+						"chartConfig": {
+							"category": "bar",
+							"keys": [],
+							"values": [],
+							"yLabel": "",
+							"xLabel": "",
+							"aggregation": "SUM",
+							"aggByBackend": false
+						},
+						"aggData": "{}",
+						"isSummary": false,
+						"previewData": {
+							"filter": null
+						},
+						"isSql": true
+					}
+				},
+				"source": [
+					"%%sql\n",
+					"CREATE TABLE customers\n",
+					"    USING Parquet\n",
+					"    LOCATION \"abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/acltest/Customers\""
+				],
+				"execution_count": 8
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"diagram": {
+						"activateDiagramType": 1,
+						"chartConfig": {
+							"category": "bar",
+							"keys": [],
+							"values": [
+								"count(1)"
+							],
+							"yLabel": "count(1)",
+							"xLabel": "",
+							"aggregation": "SUM",
+							"aggByBackend": false
+						},
+						"aggData": "{\"count(1)\":{\"\":107851}}",
+						"isSummary": false,
+						"previewData": {
+							"filter": null
+						},
+						"isSql": true
+					}
+				},
+				"source": [
+					"%%sql\n",
+					"select count(*) from customers"
+				],
+				"execution_count": 4
+			}
+		]
+	}
+}
