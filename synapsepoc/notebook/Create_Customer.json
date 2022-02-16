@@ -2,7 +2,7 @@
 	"name": "Create_Customer",
 	"properties": {
 		"folder": {
-			"name": "Facilities"
+			"name": "Scratch"
 		},
 		"nbformat": 4,
 		"nbformat_minor": 2,
@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "5cba6783-0f84-4936-8b39-009f3385ebf7"
+				"spark.autotune.trackingId": "2db5225c-3dd5-450d-a007-9dbf2702389f"
 			}
 		},
 		"metadata": {
