@@ -1489,12 +1489,12 @@
 									"referenceName": "TripFaresDataLakeStorageLinkedService",
 									"type": "LinkedServiceReference",
 									"parameters": {
-										"datalakeAccountName": {
-											"value": "@pipeline().parameters.datalakeAccountName",
-											"type": "Expression"
-										},
 										"keyVaultName": {
 											"value": "@pipeline().parameters.KeyVaultName",
+											"type": "Expression"
+										},
+										"datalakeAccountName": {
+											"value": "@pipeline().parameters.datalakeAccountName",
 											"type": "Expression"
 										}
 									}
@@ -1581,12 +1581,12 @@
 									"referenceName": "TripFaresDataLakeStorageLinkedService",
 									"type": "LinkedServiceReference",
 									"parameters": {
-										"datalakeAccountName": {
-											"value": "@pipeline().parameters.datalakeAccountName",
-											"type": "Expression"
-										},
 										"keyVaultName": {
 											"value": "@pipeline().parameters.KeyVaultName",
+											"type": "Expression"
+										},
+										"datalakeAccountName": {
+											"value": "@pipeline().parameters.datalakeAccountName",
 											"type": "Expression"
 										}
 									}
@@ -1667,11 +1667,124 @@
 				"[concat(variables('workspaceId'), '/datasets/faresDataSource')]",
 				"[concat(variables('workspaceId'), '/datasets/faresDataSink')]",
 				"[concat(variables('workspaceId'), '/dataflows/tripFaresDataTransformations')]",
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('workspaceId'), '/datasets/azureSynapseAnalyticsSchema')]",
 				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsTripsData')]",
 				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsFaresData')]",
 				"[concat(variables('workspaceId'), '/linkedServices/TripFaresDataLakeStorageLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/getDemoDBTables')]",
+			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEachTable",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('listOfTableNames')",
+								"type": "Expression"
+							},
+							"batchCount": 3,
+							"activities": [
+								{
+									"name": "CopyTable",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".csv"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "DemoDBSource",
+											"type": "DatasetReference",
+											"parameters": {
+												"tableName": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "demoDBsinkCSV",
+											"type": "DatasetReference",
+											"parameters": {
+												"folderName": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"listOfTableNames": {
+						"type": "Array",
+						"defaultValue": [
+							"CustomerData",
+							"Date",
+							"ProductData",
+							"Reseller",
+							"Sales",
+							"SalesOrder",
+							"SalesTerritory"
+						]
+					}
+				},
+				"folder": {
+					"name": "LoadSourceDemoDB"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/datasets/DemoDBSource')]",
+				"[concat(variables('workspaceId'), '/datasets/demoDBsinkCSV')]"
 			]
 		},
 		{
@@ -1970,6 +2083,47 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/linkedServices/TripFaresSynapseAnalyticsLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/demoDBsinkCSV')]",
+			"type": "Microsoft.Synapse/workspaces/datasets",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TripFaresDataLakeStorageLinkedService",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"datalakeAccountName": "vvssjupq6khjbr7mpoc",
+						"keyVaultName": "kvvvssjupq6khjbr7mpoc"
+					}
+				},
+				"parameters": {
+					"folderName": {
+						"type": "string",
+						"defaultValue": "@dataset().folderName"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": {
+							"value": "adworks/@{dataset().folderName}",
+							"type": "Expression"
+						},
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/linkedServices/TripFaresDataLakeStorageLinkedService')]"
 			]
 		},
 		{
@@ -2306,6 +2460,20 @@
 				"type": "PowerBIWorkspace",
 				"typeProperties": {
 					"workspaceID": "",
+					"tenantID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SynapsePowerBIWorkspace')]",
+			"type": "Microsoft.Synapse/workspaces/linkedServices",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": [],
+				"type": "PowerBIWorkspace",
+				"typeProperties": {
+					"workspaceID": "9a41895f-e0ef-4f85-9fc4-9e5def44781c",
 					"tenantID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
 				}
 			},
@@ -3901,238 +4069,476 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/getDemoDBTables')]",
-			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"name": "[concat(parameters('workspaceName'), '/Create_Locations')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
-				"activities": [
-					{
-						"name": "ForEachTable",
-						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@variables('listOfTableNames')",
-								"type": "Expression"
-							},
-							"batchCount": 3,
-							"activities": [
-								{
-									"name": "CopyTable",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".csv"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "DemoDBSource",
-											"type": "DatasetReference",
-											"parameters": {
-												"tableName": {
-													"value": "@item()",
-													"type": "Expression"
-												}
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "demoDBsinkCSV",
-											"type": "DatasetReference",
-											"parameters": {
-												"folderName": {
-													"value": "@item()",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"listOfTableNames": {
-						"type": "Array",
-						"defaultValue": [
-							"CustomerData",
-							"Date",
-							"ProductData",
-							"Reseller",
-							"Sales",
-							"SalesOrder",
-							"SalesTerritory"
-						]
-					}
-				},
 				"folder": {
-					"name": "LoadSourceDemoDB"
+					"name": "Facilities"
 				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/datasets/DemoDBSource')]",
-				"[concat(variables('workspaceId'), '/datasets/demoDBsinkCSV')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/demoDBsinkCSV')]",
-			"type": "Microsoft.Synapse/workspaces/datasets",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "TripFaresDataLakeStorageLinkedService",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"datalakeAccountName": "vvssjupq6khjbr7mpoc",
-						"keyVaultName": "kvvvssjupq6khjbr7mpoc"
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "ws1sparkpool1",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "56g",
+					"driverCores": 8,
+					"executorMemory": "56g",
+					"executorCores": 8,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "b2e42eb7-84c8-4010-9b00-dd901e5f64b3"
 					}
 				},
-				"parameters": {
-					"folderName": {
-						"type": "string",
-						"defaultValue": "@dataset().folderName"
-					}
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": {
-							"value": "adworks/@{dataset().folderName}",
-							"type": "Expression"
-						},
-						"fileSystem": "raw"
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "Synapse PySpark"
 					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/2ba972e5-d964-4ff6-9b9b-bf89377f4391/resourceGroups/rg-1click/providers/Microsoft.Synapse/workspaces/vvssjupq6khjbr7mpocws1/bigDataPools/ws1sparkpool1",
+						"name": "ws1sparkpool1",
+						"type": "Spark",
+						"endpoint": "https://vvssjupq6khjbr7mpocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net"
+						},
+						"sparkVersion": "2.4",
+						"nodeCount": 5,
+						"cores": 8,
+						"memory": 56,
+						"automaticScaleJobs": false
+					},
+					"sessionKeepAliveTimeout": 30
 				},
-				"schema": []
+				"cells": [
+					{
+						"cell_type": "code",
+						"metadata": {
+							"microsoft": {
+								"language": "python"
+							},
+							"collapsed": false
+						},
+						"source": [
+							"%%pyspark\n",
+							"\n",
+							"import pyspark.sql.functions as F\n",
+							"\n",
+							"locations_path = spark.read.load('abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations/locations.csv', format='csv'\n",
+							"## If header exists uncomment line below\n",
+							", header=True\n",
+							")\n",
+							"\n",
+							"locationsdf = locations_path.na.drop()\n",
+							"locations = locationsdf.withColumnRenamed('Street Address','Address').withColumnRenamed('State1', 'City').withColumnRenamed('State2', 'State')\n",
+							"\n",
+							"display(locations.limit(10))"
+						],
+						"outputs": [],
+						"execution_count": 14
+					},
+					{
+						"cell_type": "code",
+						"metadata": {},
+						"source": [
+							"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")\r\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 15
+					}
+				]
 			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/TripFaresDataLakeStorageLinkedService')]"
-			]
+			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/getDemoDBCustomerData')]",
-			"type": "Microsoft.Synapse/workspaces/pipelines",
+			"name": "[concat(parameters('workspaceName'), '/ws1sparkpool1')]",
+			"type": "Microsoft.Synapse/workspaces/bigDataPools",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
-				"activities": [
-					{
-						"name": "CopyCustomerData",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".csv"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "DemoDBSource",
-								"type": "DatasetReference",
-								"parameters": {
-									"tableName": "CustomerData"
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "demoDBsinkCSV",
-								"type": "DatasetReference",
-								"parameters": {
-									"folderName": "CustomerData"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "LoadSourceDemoDB"
-				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/datasets/DemoDBSource')]",
-				"[concat(variables('workspaceId'), '/datasets/demoDBsinkCSV')]"
-			]
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Create_Customer')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "Facilities"
+				},
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "ws1sparkpool1",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "56g",
+					"driverCores": 8,
+					"executorMemory": "56g",
+					"executorCores": 8,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "5cba6783-0f84-4936-8b39-009f3385ebf7"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "Synapse PySpark"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/2ba972e5-d964-4ff6-9b9b-bf89377f4391/resourceGroups/rg-1click/providers/Microsoft.Synapse/workspaces/vvssjupq6khjbr7mpocws1/bigDataPools/ws1sparkpool1",
+						"name": "ws1sparkpool1",
+						"type": "Spark",
+						"endpoint": "https://vvssjupq6khjbr7mpocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net"
+						},
+						"sparkVersion": "2.4",
+						"nodeCount": 5,
+						"cores": 8,
+						"memory": 56,
+						"automaticScaleJobs": false
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"metadata": {
+							"microsoft": {
+								"language": "python"
+							},
+							"collapsed": false
+						},
+						"source": [
+							"%%pyspark\n",
+							"\n",
+							"import pyspark.sql.functions as F\n",
+							"from pyspark.sql.types import StringType\n",
+							"import uuid\n",
+							"\n",
+							"numberOfLocations = 10\n",
+							"raw_cust = spark.read.load([\n",
+							"    'abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/tenants/Customer_*.csv'\n",
+							"    ], format='csv'\n",
+							"## If header exists uncomment line bellow\n",
+							", header=True\n",
+							")\n",
+							"\n",
+							"display(raw_cust.limit(10))"
+						],
+						"outputs": [],
+						"execution_count": 8
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"collapsed": false
+						},
+						"source": [
+							"customer = raw_cust.select('CustomerId','Age','ZipCode','FirstName','LastName','DateOfBirth','Email','Address','Gender')\r\n",
+							"finalCustomer = customer.withColumn (\r\n",
+							"    \"Location-ID\",\r\n",
+							"    F.array(\r\n",
+							"        F.lit(\"location-id-1\"),\r\n",
+							"        F.lit(\"location-id-2\"),\r\n",
+							"        F.lit(\"location-id-3\"),\r\n",
+							"        F.lit(\"location-id-4\"),\r\n",
+							"        F.lit(\"location-id-5\"),\r\n",
+							"        F.lit(\"location-id-6\"),\r\n",
+							"        F.lit(\"location-id-7\"),\r\n",
+							"        F.lit(\"location-id-8\"),\r\n",
+							"        F.lit(\"location-id-9\"),\r\n",
+							"        F.lit(\"location-id-10\")\r\n",
+							"    ).getItem((F.rand()*10).cast(\"int\"))\r\n",
+							").withColumnRenamed('Address','HomeAddress')\r\n",
+							"\r\n",
+							"display(finalCustomer.limit(10))"
+						],
+						"outputs": [],
+						"execution_count": 9
+					},
+					{
+						"cell_type": "code",
+						"metadata": {},
+						"source": [
+							"finalCustomer.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/customers\")"
+						],
+						"outputs": [],
+						"execution_count": 10
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/MergeCustLocations')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "Facilities"
+				},
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "ws1sparkpool1",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "56g",
+					"driverCores": 8,
+					"executorMemory": "56g",
+					"executorCores": 8,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2",
+						"spark.autotune.trackingId": "51e60e2c-39e4-40f7-b05d-b02ea07cfdac"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "Synapse PySpark"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/2ba972e5-d964-4ff6-9b9b-bf89377f4391/resourceGroups/rg-1click/providers/Microsoft.Synapse/workspaces/vvssjupq6khjbr7mpocws1/bigDataPools/ws1sparkpool1",
+						"name": "ws1sparkpool1",
+						"type": "Spark",
+						"endpoint": "https://vvssjupq6khjbr7mpocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net"
+						},
+						"sparkVersion": "2.4",
+						"nodeCount": 5,
+						"cores": 8,
+						"memory": 56,
+						"automaticScaleJobs": false
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"metadata": {
+							"microsoft": {
+								"language": "python"
+							},
+							"collapsed": false
+						},
+						"source": [
+							"%%pyspark\n",
+							"\n",
+							"import pyspark.sql.functions as F\n",
+							"\n",
+							"locations_path = spark.read.load('abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations/locations.csv', format='csv'\n",
+							"## If header exists uncomment line below\n",
+							", header=True\n",
+							")\n",
+							"\n",
+							"locationsdf = locations_path.na.drop()\n",
+							"locations = locationsdf.withColumnRenamed('Street Address','Address').withColumnRenamed('State1', 'City').withColumnRenamed('State2', 'State')\n",
+							"\n",
+							"display(locations.limit(10))"
+						],
+						"outputs": [],
+						"execution_count": 2
+					},
+					{
+						"cell_type": "code",
+						"metadata": {},
+						"source": [
+							"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")\r\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 3
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"microsoft": {
+								"language": "python"
+							},
+							"collapsed": false
+						},
+						"source": [
+							"%%pyspark\r\n",
+							"\r\n",
+							"import pyspark.sql.functions as F\r\n",
+							"from pyspark.sql.types import StringType\r\n",
+							"import uuid\r\n",
+							"\r\n",
+							"numberOfLocations = 10\r\n",
+							"raw_cust = spark.read.load([\r\n",
+							"    'abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/customers/Customer_*.csv'\r\n",
+							"    ], format='csv'\r\n",
+							"## If header exists uncomment line bellow\r\n",
+							", header=True\r\n",
+							")\r\n",
+							"\r\n",
+							"display(raw_cust.limit(10))"
+						],
+						"outputs": [],
+						"execution_count": 4
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"collapsed": false
+						},
+						"source": [
+							"customer = raw_cust.select('CustomerId','Age','ZipCode','FirstName','LastName','DateOfBirth','Email','Address','Gender')\r\n",
+							"finalCustomer = customer.withColumn (\r\n",
+							"    \"Location-ID\",\r\n",
+							"    F.array(\r\n",
+							"        F.lit(\"location-id-1\"),\r\n",
+							"        F.lit(\"location-id-2\"),\r\n",
+							"        F.lit(\"location-id-3\"),\r\n",
+							"        F.lit(\"location-id-4\"),\r\n",
+							"        F.lit(\"location-id-5\"),\r\n",
+							"        F.lit(\"location-id-6\"),\r\n",
+							"        F.lit(\"location-id-7\"),\r\n",
+							"        F.lit(\"location-id-8\"),\r\n",
+							"        F.lit(\"location-id-9\"),\r\n",
+							"        F.lit(\"location-id-10\")\r\n",
+							"    ).getItem((F.rand()*10).cast(\"int\"))\r\n",
+							").withColumnRenamed('Address','HomeAddress')\r\n",
+							"\r\n",
+							"display(finalCustomer.limit(10))"
+						],
+						"outputs": [],
+						"execution_count": 5
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"finalCustomer.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/customers\")"
+						],
+						"outputs": [],
+						"execution_count": 6
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							},
+							"collapsed": false
+						},
+						"source": [
+							"from pyspark.sql.functions import col\r\n",
+							"customer_alias = finalCustomer.alias('customer_alias')\r\n",
+							"location_alias = locations.alias('location_alias')\r\n",
+							"\r\n",
+							"tenants = customer_alias.join(location_alias, on=['location-id'], how='inner')\r\n",
+							"tenantsFinal = tenants.select('Location-ID','FirstName','LastName','Address','City','State', col('location_alias.Zipcode'),'Latitude','Longitude')\r\n",
+							"#tenantsFinal.show()\r\n",
+							"\r\n",
+							"display(tenantsFinal.limit(100))"
+						],
+						"outputs": [],
+						"execution_count": 10
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"tenantsFinal.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/tenants\")"
+						],
+						"outputs": [],
+						"execution_count": 12
+					}
+				]
+			},
+			"dependsOn": []
 		}
 	]
 }
