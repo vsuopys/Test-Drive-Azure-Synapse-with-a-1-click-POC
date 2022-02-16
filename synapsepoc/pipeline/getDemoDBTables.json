@@ -12,7 +12,7 @@
 						"value": "@variables('listOfTableNames')",
 						"type": "Expression"
 					},
-					"batchCount": 3,
+					"batchCount": 7,
 					"activities": [
 						{
 							"name": "CopyTable",
