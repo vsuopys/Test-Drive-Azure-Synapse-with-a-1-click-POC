@@ -1,0 +1,35 @@
+{
+	"name": "demoDBsinkCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TripFaresDataLakeStorageLinkedService",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"datalakeAccountName": "vvssjupq6khjbr7mpoc",
+				"keyVaultName": "kvvvssjupq6khjbr7mpoc"
+			}
+		},
+		"parameters": {
+			"folderName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "adworks/@dataset().folderName",
+					"type": "Expression"
+				},
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
