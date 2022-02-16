@@ -1442,7 +1442,7 @@
 						}
 					},
 					{
-						"name": "Copy data Trips Data",
+						"name": "Copy Into Trips Data Table",
 						"type": "Copy",
 						"dependsOn": [
 							{
@@ -1489,12 +1489,12 @@
 									"referenceName": "TripFaresDataLakeStorageLinkedService",
 									"type": "LinkedServiceReference",
 									"parameters": {
-										"keyVaultName": {
-											"value": "@pipeline().parameters.KeyVaultName",
-											"type": "Expression"
-										},
 										"datalakeAccountName": {
 											"value": "@pipeline().parameters.datalakeAccountName",
+											"type": "Expression"
+										},
+										"keyVaultName": {
+											"value": "@pipeline().parameters.KeyVaultName",
 											"type": "Expression"
 										}
 									}
@@ -1534,7 +1534,7 @@
 						]
 					},
 					{
-						"name": "Copy data Fares Data",
+						"name": "Copy Into Fares Data Table",
 						"type": "Copy",
 						"dependsOn": [
 							{
@@ -1581,12 +1581,12 @@
 									"referenceName": "TripFaresDataLakeStorageLinkedService",
 									"type": "LinkedServiceReference",
 									"parameters": {
-										"keyVaultName": {
-											"value": "@pipeline().parameters.KeyVaultName",
-											"type": "Expression"
-										},
 										"datalakeAccountName": {
 											"value": "@pipeline().parameters.datalakeAccountName",
+											"type": "Expression"
+										},
+										"keyVaultName": {
+											"value": "@pipeline().parameters.KeyVaultName",
 											"type": "Expression"
 										}
 									}
@@ -1667,6 +1667,7 @@
 				"[concat(variables('workspaceId'), '/datasets/faresDataSource')]",
 				"[concat(variables('workspaceId'), '/datasets/faresDataSink')]",
 				"[concat(variables('workspaceId'), '/dataflows/tripFaresDataTransformations')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('workspaceId'), '/datasets/azureSynapseAnalyticsSchema')]",
 				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsTripsData')]",
 				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsFaresData')]",
@@ -3719,7 +3720,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"folder": {
-					"name": "Facilities"
+					"name": "Scratch"
 				},
 				"nbformat": 4,
 				"nbformat_minor": 2,
@@ -3737,7 +3738,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "5cba6783-0f84-4936-8b39-009f3385ebf7"
+						"spark.autotune.trackingId": "2db5225c-3dd5-450d-a007-9dbf2702389f"
 					}
 				},
 				"metadata": {
@@ -3762,7 +3763,8 @@
 						"sparkVersion": "2.4",
 						"nodeCount": 5,
 						"cores": 8,
-						"memory": 56
+						"memory": 56,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -3834,6 +3836,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"finalCustomer.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/customers\")"
 						],
@@ -3850,7 +3853,7 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"folder": {
-					"name": "Facilities"
+					"name": "Scratch"
 				},
 				"nbformat": 4,
 				"nbformat_minor": 2,
@@ -3868,7 +3871,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "b2e42eb7-84c8-4010-9b00-dd901e5f64b3"
+						"spark.autotune.trackingId": "dcfdc75f-5b22-4de6-b10f-48bef8ace7c8"
 					}
 				},
 				"metadata": {
@@ -3893,7 +3896,8 @@
 						"sparkVersion": "2.4",
 						"nodeCount": 5,
 						"cores": 8,
-						"memory": 56
+						"memory": 56,
+						"automaticScaleJobs": false
 					},
 					"sessionKeepAliveTimeout": 30
 				},
@@ -3926,6 +3930,7 @@
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")\r\n",
 							""
@@ -4275,7 +4280,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/MergeCustLocations')]",
+			"name": "[concat(parameters('workspaceName'), '/1 MergeCustLocations')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
@@ -4298,7 +4303,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "51e60e2c-39e4-40f7-b05d-b02ea07cfdac"
+						"spark.autotune.trackingId": "81e1f876-57eb-44df-982d-197daea8c33b"
 					}
 				},
 				"metadata": {
@@ -4323,9 +4328,10 @@
 						"sparkVersion": "2.4",
 						"nodeCount": 5,
 						"cores": 8,
-						"memory": 56
+						"memory": 56,
+						"automaticScaleJobs": false
 					},
-					"sessionKeepAliveTimeout": 30
+					"sessionKeepAliveTimeout": 90
 				},
 				"cells": [
 					{
@@ -4352,16 +4358,16 @@
 							"display(locations.limit(10))"
 						],
 						"outputs": [],
-						"execution_count": 2
+						"execution_count": 1
 					},
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
-							"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")\r\n",
-							""
+							"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")"
 						],
 						"outputs": [],
-						"execution_count": 3
+						"execution_count": 2
 					},
 					{
 						"cell_type": "code",
@@ -4383,9 +4389,9 @@
 						"source": [
 							"%%pyspark\r\n",
 							"\r\n",
-							"import pyspark.sql.functions as F\r\n",
-							"from pyspark.sql.types import StringType\r\n",
-							"import uuid\r\n",
+							"# import pyspark.sql.functions as F\r\n",
+							"# from pyspark.sql.types import StringType\r\n",
+							"# import uuid\r\n",
 							"\r\n",
 							"numberOfLocations = 10\r\n",
 							"raw_cust = spark.read.load([\r\n",
@@ -4482,7 +4488,7 @@
 							"display(tenantsFinal.limit(100))"
 						],
 						"outputs": [],
-						"execution_count": 10
+						"execution_count": 7
 					},
 					{
 						"cell_type": "code",
@@ -4501,7 +4507,7 @@
 							"tenantsFinal.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/tenants\")"
 						],
 						"outputs": [],
-						"execution_count": 12
+						"execution_count": 8
 					}
 				]
 			},
@@ -4741,6 +4747,15 @@
 				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('workspaceId'), '/dataflows/StandardizeEnergy')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/ws1sparkpool1')]",
+			"type": "Microsoft.Synapse/workspaces/bigDataPools",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"annotations": []
+			},
+			"dependsOn": []
 		}
 	]
 }
