@@ -1,66 +1,95 @@
 {
-	"name": "getDemoDBCustomerData",
+	"name": "getDemoDBTables",
 	"properties": {
 		"activities": [
 			{
-				"name": "CopyCustomerData",
-				"type": "Copy",
+				"name": "ForEachTable",
+				"type": "ForEach",
 				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+					"items": {
+						"value": "@variables('listOfTableNames')",
+						"type": "Expression"
 					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".csv"
+					"batchCount": 3,
+					"activities": [
+						{
+							"name": "CopyTable",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".csv"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DemoDBSource",
+									"type": "DatasetReference",
+									"parameters": {
+										"tableName": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "demoDBsinkCSV",
+									"type": "DatasetReference",
+									"parameters": {
+										"folderName": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DemoDBSource",
-						"type": "DatasetReference",
-						"parameters": {
-							"tableName": "CustomerData"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "demoDBsinkCSV",
-						"type": "DatasetReference",
-						"parameters": {
-							"folderName": "CustomerData"
-						}
-					}
-				]
+					]
+				}
 			}
 		],
+		"variables": {
+			"listOfTableNames": {
+				"type": "Array",
+				"defaultValue": [
+					"CustomerData"
+				]
+			}
+		},
 		"folder": {
 			"name": "LoadSourceDemoDB"
 		},
