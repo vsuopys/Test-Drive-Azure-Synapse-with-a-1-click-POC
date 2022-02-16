@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "CustomerData",
+						"value": "@variables('listOfTableNames')",
 						"type": "Expression"
 					},
 					"batchCount": 3,
@@ -82,6 +82,14 @@
 				}
 			}
 		],
+		"variables": {
+			"listOfTableNames": {
+				"type": "Array",
+				"defaultValue": [
+					"CustomerData"
+				]
+			}
+		},
 		"folder": {
 			"name": "LoadSourceDemoDB"
 		},
