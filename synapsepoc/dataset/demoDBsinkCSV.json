@@ -11,7 +11,8 @@
 		},
 		"parameters": {
 			"folderName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "@dataset().folderName"
 			}
 		},
 		"annotations": [],
