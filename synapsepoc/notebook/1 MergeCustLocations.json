@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "d893ed87-b792-48c0-bd2e-b64072f7c6b6"
+				"spark.autotune.trackingId": "089435e1-56b1-4b91-9088-e74b4655ea1a"
 			}
 		},
 		"metadata": {
@@ -74,14 +74,14 @@
 					"\n",
 					"display(locations.limit(10))"
 				],
-				"execution_count": 2
+				"execution_count": 1
 			},
 			{
 				"cell_type": "code",
 				"source": [
 					"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")"
 				],
-				"execution_count": 3
+				"execution_count": 2
 			},
 			{
 				"cell_type": "code",
@@ -103,9 +103,9 @@
 				"source": [
 					"%%pyspark\r\n",
 					"\r\n",
-					"import pyspark.sql.functions as F\r\n",
-					"from pyspark.sql.types import StringType\r\n",
-					"import uuid\r\n",
+					"# import pyspark.sql.functions as F\r\n",
+					"# from pyspark.sql.types import StringType\r\n",
+					"# import uuid\r\n",
 					"\r\n",
 					"numberOfLocations = 10\r\n",
 					"raw_cust = spark.read.load([\r\n",
@@ -198,7 +198,7 @@
 					"\r\n",
 					"display(tenantsFinal.limit(100))"
 				],
-				"execution_count": 10
+				"execution_count": 7
 			},
 			{
 				"cell_type": "code",
@@ -216,7 +216,7 @@
 				"source": [
 					"tenantsFinal.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/tenants\")"
 				],
-				"execution_count": 12
+				"execution_count": 8
 			}
 		]
 	}
