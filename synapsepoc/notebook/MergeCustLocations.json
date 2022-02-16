@@ -1,0 +1,224 @@
+{
+	"name": "MergeCustLocations",
+	"properties": {
+		"folder": {
+			"name": "Facilities"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "ws1sparkpool1",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "56g",
+			"driverCores": 8,
+			"executorMemory": "56g",
+			"executorCores": 8,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "7a054956-df52-4bd3-baab-d829ab9ec844"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/2ba972e5-d964-4ff6-9b9b-bf89377f4391/resourceGroups/rg-1click/providers/Microsoft.Synapse/workspaces/vvssjupq6khjbr7mpocws1/bigDataPools/ws1sparkpool1",
+				"name": "ws1sparkpool1",
+				"type": "Spark",
+				"endpoint": "https://vvssjupq6khjbr7mpocws1.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/ws1sparkpool1",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 5,
+				"cores": 8,
+				"memory": 56,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\n",
+					"\n",
+					"import pyspark.sql.functions as F\n",
+					"\n",
+					"locations_path = spark.read.load('abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations/locations.csv', format='csv'\n",
+					"## If header exists uncomment line below\n",
+					", header=True\n",
+					")\n",
+					"\n",
+					"locationsdf = locations_path.na.drop()\n",
+					"locations = locationsdf.withColumnRenamed('Street Address','Address').withColumnRenamed('State1', 'City').withColumnRenamed('State2', 'State')\n",
+					"\n",
+					"display(locations.limit(10))"
+				],
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")\r\n",
+					""
+				],
+				"execution_count": 3
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"\r\n",
+					"import pyspark.sql.functions as F\r\n",
+					"from pyspark.sql.types import StringType\r\n",
+					"import uuid\r\n",
+					"\r\n",
+					"numberOfLocations = 10\r\n",
+					"raw_cust = spark.read.load([\r\n",
+					"    'abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/customers/Customer_*.csv'\r\n",
+					"    ], format='csv'\r\n",
+					"## If header exists uncomment line bellow\r\n",
+					", header=True\r\n",
+					")\r\n",
+					"\r\n",
+					"display(raw_cust.limit(10))"
+				],
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"customer = raw_cust.select('CustomerId','Age','ZipCode','FirstName','LastName','DateOfBirth','Email','Address','Gender')\r\n",
+					"finalCustomer = customer.withColumn (\r\n",
+					"    \"Location-ID\",\r\n",
+					"    F.array(\r\n",
+					"        F.lit(\"location-id-1\"),\r\n",
+					"        F.lit(\"location-id-2\"),\r\n",
+					"        F.lit(\"location-id-3\"),\r\n",
+					"        F.lit(\"location-id-4\"),\r\n",
+					"        F.lit(\"location-id-5\"),\r\n",
+					"        F.lit(\"location-id-6\"),\r\n",
+					"        F.lit(\"location-id-7\"),\r\n",
+					"        F.lit(\"location-id-8\"),\r\n",
+					"        F.lit(\"location-id-9\"),\r\n",
+					"        F.lit(\"location-id-10\")\r\n",
+					"    ).getItem((F.rand()*10).cast(\"int\"))\r\n",
+					").withColumnRenamed('Address','HomeAddress')\r\n",
+					"\r\n",
+					"display(finalCustomer.limit(10))"
+				],
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"finalCustomer.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/customers\")"
+				],
+				"execution_count": 6
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"from pyspark.sql.functions import col\r\n",
+					"customer_alias = finalCustomer.alias('customer_alias')\r\n",
+					"location_alias = locations.alias('location_alias')\r\n",
+					"\r\n",
+					"tenants = customer_alias.join(location_alias, on=['location-id'], how='inner')\r\n",
+					"tenantsFinal = tenants.select('Location-ID','FirstName','LastName','Address','City',col('location_alias.Zipcode'),'Latitude','Longitude')\r\n",
+					"#tenantsFinal.show()\r\n",
+					"\r\n",
+					"display(tenantsFinal.limit(100))"
+				],
+				"execution_count": 8
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"tenantsFinal.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/tenants\")"
+				],
+				"execution_count": 9
+			}
+		]
+	}
+}
