@@ -86,7 +86,13 @@
 			"listOfTableNames": {
 				"type": "Array",
 				"defaultValue": [
-					"CustomerData"
+					"CustomerData",
+					"Date",
+					"ProductData",
+					"Reseller",
+					"Sales",
+					"SalesOrder",
+					"SalesTerritory"
 				]
 			}
 		},
