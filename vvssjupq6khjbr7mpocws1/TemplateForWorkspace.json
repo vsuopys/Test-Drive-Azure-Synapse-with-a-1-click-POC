@@ -1489,12 +1489,12 @@
 									"referenceName": "TripFaresDataLakeStorageLinkedService",
 									"type": "LinkedServiceReference",
 									"parameters": {
-										"keyVaultName": {
-											"value": "@pipeline().parameters.KeyVaultName",
-											"type": "Expression"
-										},
 										"datalakeAccountName": {
 											"value": "@pipeline().parameters.datalakeAccountName",
+											"type": "Expression"
+										},
+										"keyVaultName": {
+											"value": "@pipeline().parameters.KeyVaultName",
 											"type": "Expression"
 										}
 									}
@@ -1581,12 +1581,12 @@
 									"referenceName": "TripFaresDataLakeStorageLinkedService",
 									"type": "LinkedServiceReference",
 									"parameters": {
-										"keyVaultName": {
-											"value": "@pipeline().parameters.KeyVaultName",
-											"type": "Expression"
-										},
 										"datalakeAccountName": {
 											"value": "@pipeline().parameters.datalakeAccountName",
+											"type": "Expression"
+										},
+										"keyVaultName": {
+											"value": "@pipeline().parameters.KeyVaultName",
 											"type": "Expression"
 										}
 									}
@@ -1667,6 +1667,7 @@
 				"[concat(variables('workspaceId'), '/datasets/faresDataSource')]",
 				"[concat(variables('workspaceId'), '/datasets/faresDataSink')]",
 				"[concat(variables('workspaceId'), '/dataflows/tripFaresDataTransformations')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('workspaceId'), '/datasets/azureSynapseAnalyticsSchema')]",
 				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsTripsData')]",
 				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsFaresData')]",
@@ -1746,6 +1747,7 @@
 				"type": "AzureSqlDWTable",
 				"schema": [],
 				"typeProperties": {
+					"schema": "dbo",
 					"table": "FaresData"
 				}
 			},
@@ -1816,6 +1818,7 @@
 				"type": "AzureSqlDWTable",
 				"schema": [],
 				"typeProperties": {
+					"schema": "dbo",
 					"table": "TripsData"
 				}
 			},
@@ -1981,11 +1984,11 @@
 				"parameters": {
 					"keyVaultName": {
 						"type": "string",
-						"defaultValue": "kvmsft"
+						"defaultValue": "kvvvssjupq6khjbr7mpoc"
 					},
 					"datalakeAccountName": {
 						"type": "string",
-						"defaultValue": "adlsmsft"
+						"defaultValue": "vvssjupq6khjbr7mpoc"
 					}
 				},
 				"folder": {
@@ -2106,10 +2109,12 @@
 				},
 				"parameters": {
 					"datalakeAccountName": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "vvssjupq6khjbr7mpoc"
 					},
 					"keyVaultName": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "kvvvssjupq6khjbr7mpoc"
 					}
 				},
 				"folder": {
