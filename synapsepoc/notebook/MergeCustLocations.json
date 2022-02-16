@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "7a054956-df52-4bd3-baab-d829ab9ec844"
+				"spark.autotune.trackingId": "51e60e2c-39e4-40f7-b05d-b02ea07cfdac"
 			}
 		},
 		"metadata": {
@@ -194,12 +194,12 @@
 					"location_alias = locations.alias('location_alias')\r\n",
 					"\r\n",
 					"tenants = customer_alias.join(location_alias, on=['location-id'], how='inner')\r\n",
-					"tenantsFinal = tenants.select('Location-ID','FirstName','LastName','Address','City',col('location_alias.Zipcode'),'Latitude','Longitude')\r\n",
+					"tenantsFinal = tenants.select('Location-ID','FirstName','LastName','Address','City','State', col('location_alias.Zipcode'),'Latitude','Longitude')\r\n",
 					"#tenantsFinal.show()\r\n",
 					"\r\n",
 					"display(tenantsFinal.limit(100))"
 				],
-				"execution_count": 8
+				"execution_count": 10
 			},
 			{
 				"cell_type": "code",
@@ -217,7 +217,7 @@
 				"source": [
 					"tenantsFinal.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/tenants\")"
 				],
-				"execution_count": 9
+				"execution_count": 12
 			}
 		]
 	}
