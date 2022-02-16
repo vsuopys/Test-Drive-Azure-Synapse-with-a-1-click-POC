@@ -41,6 +41,7 @@
 		"type": "AzureSqlDWTable",
 		"schema": [],
 		"typeProperties": {
+			"schema": "@dataset().SchemaName",
 			"table": "TripsData"
 		}
 	}
