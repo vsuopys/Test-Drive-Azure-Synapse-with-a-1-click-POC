@@ -1,0 +1,79 @@
+{
+	"name": "Dataflow1",
+	"properties": {
+		"folder": {
+			"name": "EnergyUsage"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "RawEnergyFiles",
+						"type": "DatasetReference"
+					},
+					"name": "RawEnergyCSV"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "EnergyInParquet",
+						"type": "DatasetReference"
+					},
+					"name": "EnergyByLocationParquetFiles"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ParsePartitions"
+				},
+				{
+					"name": "SelectColumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Timestamp as timestamp 'MM/dd/yyyy HH:mm',",
+				"          OATf as double,",
+				"          PowerkW as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     rowUrlColumn: 'SourcePath') ~> RawEnergyCSV",
+				"RawEnergyCSV derive(SourceFile = reverse(split(reverse(SourcePath),'/')[1]),",
+				"          LocationName = rtrim(reverse(split(reverse(SourcePath),'/')[1]),'.csv'),",
+				"          Location = rtrim(reverse(split(reverse(SourcePath),'/')[1]),'.csv')) ~> ParsePartitions",
+				"ParsePartitions select(mapColumn(",
+				"          Timestamp,",
+				"          PowerkW,",
+				"          SourceFile,",
+				"          LocationName,",
+				"          Location",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectColumns",
+				"SelectColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          LocationName,",
+				"          Timestamp,",
+				"          PowerkW,",
+				"          SourceFile,",
+				"          Location",
+				"     ),",
+				"     partitionBy('key',",
+				"          0,",
+				"          Location",
+				"     )) ~> EnergyByLocationParquetFiles"
+			]
+		}
+	}
+}
