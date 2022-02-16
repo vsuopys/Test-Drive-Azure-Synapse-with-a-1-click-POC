@@ -2,7 +2,7 @@
 	"name": "Create_Locations",
 	"properties": {
 		"folder": {
-			"name": "Facilities"
+			"name": "Scratch"
 		},
 		"nbformat": 4,
 		"nbformat_minor": 2,
@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "b2e42eb7-84c8-4010-9b00-dd901e5f64b3"
+				"spark.autotune.trackingId": "dcfdc75f-5b22-4de6-b10f-48bef8ace7c8"
 			}
 		},
 		"metadata": {
