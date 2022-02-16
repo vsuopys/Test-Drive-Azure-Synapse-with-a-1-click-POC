@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "90593a34-7b3b-4ff6-9d4e-40daf3c0ab2a"
+				"spark.autotune.trackingId": "b2e42eb7-84c8-4010-9b00-dd901e5f64b3"
 			}
 		},
 		"metadata": {
@@ -63,11 +63,6 @@
 					"%%pyspark\n",
 					"\n",
 					"import pyspark.sql.functions as F\n",
-					"\n",
-					"# locations_path = spark.read.load('abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Location/locations.csv', format='csv'\n",
-					"# ## If header exists uncomment line below\n",
-					"# , header=True\n",
-					"# )\n",
 					"\n",
 					"locations_path = spark.read.load('abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations/locations.csv', format='csv'\n",
 					"## If header exists uncomment line below\n",
