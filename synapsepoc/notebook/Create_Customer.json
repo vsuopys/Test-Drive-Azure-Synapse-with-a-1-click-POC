@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "7037b11a-be20-4748-baf3-21072e57ccaa"
+				"spark.autotune.trackingId": "5cba6783-0f84-4936-8b39-009f3385ebf7"
 			}
 		},
 		"metadata": {
@@ -120,116 +120,6 @@
 					"finalCustomer.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/customers\")"
 				],
 				"execution_count": 10
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"microsoft": {
-						"language": "sparksql"
-					},
-					"diagram": {
-						"activateDiagramType": 1,
-						"chartConfig": {
-							"category": "bar",
-							"keys": [],
-							"values": [],
-							"yLabel": "",
-							"xLabel": "",
-							"aggregation": "SUM",
-							"aggByBackend": false
-						},
-						"aggData": "{}",
-						"isSummary": false,
-						"previewData": {
-							"filter": null
-						},
-						"isSql": true
-					}
-				},
-				"source": [
-					"%%sql\n",
-					"DROP TABLE tenants"
-				],
-				"execution_count": 11
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"microsoft": {
-						"language": "sparksql"
-					}
-				},
-				"source": [
-					"%%sql\n",
-					"CREATE DATABASE testdom"
-				],
-				"execution_count": 7
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"microsoft": {
-						"language": "sparksql"
-					},
-					"diagram": {
-						"activateDiagramType": 1,
-						"chartConfig": {
-							"category": "bar",
-							"keys": [],
-							"values": [],
-							"yLabel": "",
-							"xLabel": "",
-							"aggregation": "SUM",
-							"aggByBackend": false
-						},
-						"aggData": "{}",
-						"isSummary": false,
-						"previewData": {
-							"filter": null
-						},
-						"isSql": true
-					}
-				},
-				"source": [
-					"%%sql\n",
-					"CREATE TABLE customers\n",
-					"    USING Parquet\n",
-					"    LOCATION \"abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/acltest/Customers\""
-				],
-				"execution_count": 8
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"microsoft": {
-						"language": "sparksql"
-					},
-					"diagram": {
-						"activateDiagramType": 1,
-						"chartConfig": {
-							"category": "bar",
-							"keys": [],
-							"values": [
-								"count(1)"
-							],
-							"yLabel": "count(1)",
-							"xLabel": "",
-							"aggregation": "SUM",
-							"aggByBackend": false
-						},
-						"aggData": "{\"count(1)\":{\"\":107851}}",
-						"isSummary": false,
-						"previewData": {
-							"filter": null
-						},
-						"isSql": true
-					}
-				},
-				"source": [
-					"%%sql\n",
-					"select count(*) from customers"
-				],
-				"execution_count": 4
 			}
 		]
 	}
