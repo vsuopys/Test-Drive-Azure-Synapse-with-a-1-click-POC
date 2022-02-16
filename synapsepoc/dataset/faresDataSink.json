@@ -18,11 +18,11 @@
 		"parameters": {
 			"keyVaultName": {
 				"type": "string",
-				"defaultValue": "kvmsft"
+				"defaultValue": "kvvvssjupq6khjbr7mpoc"
 			},
 			"datalakeAccountName": {
 				"type": "string",
-				"defaultValue": "adlsmsft"
+				"defaultValue": "vvssjupq6khjbr7mpoc"
 			}
 		},
 		"folder": {
