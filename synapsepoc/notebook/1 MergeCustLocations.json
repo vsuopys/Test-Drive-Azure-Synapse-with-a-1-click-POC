@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "551b333e-36cc-41c7-9984-e6f9a0fafedf"
+				"spark.autotune.trackingId": "d893ed87-b792-48c0-bd2e-b64072f7c6b6"
 			}
 		},
 		"metadata": {
@@ -48,7 +48,7 @@
 				"memory": 56,
 				"automaticScaleJobs": false
 			},
-			"sessionKeepAliveTimeout": 30
+			"sessionKeepAliveTimeout": 90
 		},
 		"cells": [
 			{
@@ -79,8 +79,7 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")\r\n",
-					""
+					"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")"
 				],
 				"execution_count": 3
 			},
