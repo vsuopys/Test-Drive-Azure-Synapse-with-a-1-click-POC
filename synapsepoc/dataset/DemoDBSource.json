@@ -1,15 +1,26 @@
 {
-	"name": "DemoDBAll",
+	"name": "DemoDBSource",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DemoDB",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tableName": {
+				"type": "string"
+			}
 		},
 		"folder": {
 			"name": "MyDemoSourceDB"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"table": {
+				"value": "@dataset().tableName",
+				"type": "Expression"
+			}
+		}
 	}
 }
