@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "ef12865e-39f2-44a4-9a69-bfab75a1103a"
+				"spark.autotune.trackingId": "90593a34-7b3b-4ff6-9d4e-40daf3c0ab2a"
 			}
 		},
 		"metadata": {
@@ -28,7 +28,7 @@
 			"enableDebugMode": false,
 			"kernelspec": {
 				"name": "synapse_pyspark",
-				"display_name": "python"
+				"display_name": "Synapse PySpark"
 			},
 			"language_info": {
 				"name": "python"
@@ -53,28 +53,41 @@
 		"cells": [
 			{
 				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
 				"source": [
 					"%%pyspark\n",
 					"\n",
 					"import pyspark.sql.functions as F\n",
 					"\n",
-					"locations_path = spark.read.load('abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Location/locations.csv', format='csv'\n",
+					"# locations_path = spark.read.load('abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Location/locations.csv', format='csv'\n",
+					"# ## If header exists uncomment line below\n",
+					"# , header=True\n",
+					"# )\n",
+					"\n",
+					"locations_path = spark.read.load('abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations/locations.csv', format='csv'\n",
 					"## If header exists uncomment line below\n",
 					", header=True\n",
 					")\n",
 					"\n",
 					"locationsdf = locations_path.na.drop()\n",
-					"locations = locationsdf.withColumnRenamed('Street Address','Address')\n",
-					"#locations.show()"
+					"locations = locationsdf.withColumnRenamed('Street Address','Address').withColumnRenamed('State1', 'City').withColumnRenamed('State2', 'State')\n",
+					"\n",
+					"display(locations.limit(10))"
 				],
-				"execution_count": 4
+				"execution_count": 14
 			},
 			{
 				"cell_type": "code",
 				"source": [
-					"locations.write.format('parquet').mode('overwrite').save(\"abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Stage/Location/Locations\")"
+					"locations.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/locations\")\r\n",
+					""
 				],
-				"execution_count": 3
+				"execution_count": 15
 			}
 		]
 	}
