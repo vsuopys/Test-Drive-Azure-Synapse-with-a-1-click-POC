@@ -21,7 +21,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": {
-					"value": "adworks/@dataset().folderName",
+					"value": "adworks/@{dataset().folderName}",
 					"type": "Expression"
 				},
 				"fileSystem": "raw"
