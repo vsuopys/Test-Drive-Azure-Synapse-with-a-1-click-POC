@@ -41,7 +41,7 @@
 		"type": "AzureSqlDWTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "@dataset().SchemaName",
+			"schema": "dbo",
 			"table": "FaresData"
 		}
 	}
