@@ -1,0 +1,27 @@
+{
+	"name": "EnergyInParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TripFaresDataLakeStorageLinkedService",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"datalakeAccountName": "vvssjupq6khjbr7mpoc",
+				"keyVaultName": "kvvvssjupq6khjbr7mpoc"
+			}
+		},
+		"folder": {
+			"name": "EnergyUsage"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "facilities/energy",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
