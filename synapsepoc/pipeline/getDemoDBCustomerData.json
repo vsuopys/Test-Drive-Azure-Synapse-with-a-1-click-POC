@@ -71,7 +71,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"folderName": {
-											"value": "@item()",
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}
