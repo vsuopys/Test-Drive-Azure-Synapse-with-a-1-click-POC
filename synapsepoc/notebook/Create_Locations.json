@@ -1,6 +1,9 @@
 {
 	"name": "Create_Locations",
 	"properties": {
+		"folder": {
+			"name": "Facilities"
+		},
 		"nbformat": 4,
 		"nbformat_minor": 2,
 		"bigDataPool": {
@@ -17,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "e7b4d7dc-b524-4bf9-b2f7-7cdeddf1c335"
+				"spark.autotune.trackingId": "ef12865e-39f2-44a4-9a69-bfab75a1103a"
 			}
 		},
 		"metadata": {
