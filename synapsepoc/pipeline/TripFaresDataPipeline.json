@@ -276,7 +276,7 @@
 				}
 			},
 			{
-				"name": "Copy data Trips Data",
+				"name": "Copy Into Trips Data Table",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -323,12 +323,12 @@
 							"referenceName": "TripFaresDataLakeStorageLinkedService",
 							"type": "LinkedServiceReference",
 							"parameters": {
-								"keyVaultName": {
-									"value": "@pipeline().parameters.KeyVaultName",
-									"type": "Expression"
-								},
 								"datalakeAccountName": {
 									"value": "@pipeline().parameters.datalakeAccountName",
+									"type": "Expression"
+								},
+								"keyVaultName": {
+									"value": "@pipeline().parameters.KeyVaultName",
 									"type": "Expression"
 								}
 							}
@@ -367,7 +367,7 @@
 				]
 			},
 			{
-				"name": "Copy data Fares Data",
+				"name": "Copy Into Fares Data Table",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -414,12 +414,12 @@
 							"referenceName": "TripFaresDataLakeStorageLinkedService",
 							"type": "LinkedServiceReference",
 							"parameters": {
-								"keyVaultName": {
-									"value": "@pipeline().parameters.KeyVaultName",
-									"type": "Expression"
-								},
 								"datalakeAccountName": {
 									"value": "@pipeline().parameters.datalakeAccountName",
+									"type": "Expression"
+								},
+								"keyVaultName": {
+									"value": "@pipeline().parameters.KeyVaultName",
 									"type": "Expression"
 								}
 							}
