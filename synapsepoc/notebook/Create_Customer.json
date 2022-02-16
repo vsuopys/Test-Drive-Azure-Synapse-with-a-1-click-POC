@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "aaaf8187-af58-463d-9bc7-42c824a3d034"
+				"spark.autotune.trackingId": "7037b11a-be20-4748-baf3-21072e57ccaa"
 			}
 		},
 		"metadata": {
@@ -28,7 +28,7 @@
 			"enableDebugMode": false,
 			"kernelspec": {
 				"name": "synapse_pyspark",
-				"display_name": "python"
+				"display_name": "Synapse PySpark"
 			},
 			"language_info": {
 				"name": "python"
@@ -53,6 +53,12 @@
 		"cells": [
 			{
 				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					},
+					"collapsed": false
+				},
 				"source": [
 					"%%pyspark\n",
 					"\n",
@@ -61,57 +67,59 @@
 					"import uuid\n",
 					"\n",
 					"numberOfLocations = 10\n",
-					"data_path = spark.read.load([\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_1.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_10.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_11.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_2.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_3.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_4.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_5.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_6.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_7.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_8.csv',\n",
-					"    'abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Raw/Customer/Customer_9.csv'\n",
+					"raw_cust = spark.read.load([\n",
+					"    'abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/tenants/Customer_*.csv'\n",
 					"    ], format='csv'\n",
 					"## If header exists uncomment line bellow\n",
 					", header=True\n",
 					")\n",
-					"#data_path.show(100)\n",
-					"customer = data_path.select('CustomerId','Age','ZipCode','FirstName','LastName','DateOfBirth','Email','Address','Gender')\n",
-					"finalCustomer = customer.withColumn (\n",
-					"    \"Location-ID\",\n",
-					"    F.array(\n",
-					"        F.lit(\"location-id-1\"),\n",
-					"        F.lit(\"location-id-2\"),\n",
-					"        F.lit(\"location-id-3\"),\n",
-					"        F.lit(\"location-id-4\"),\n",
-					"        F.lit(\"location-id-5\"),\n",
-					"        F.lit(\"location-id-6\"),\n",
-					"        F.lit(\"location-id-7\"),\n",
-					"        F.lit(\"location-id-8\"),\n",
-					"        F.lit(\"location-id-9\"),\n",
-					"        F.lit(\"location-id-10\")\n",
-					"    ).getItem(\n",
-					"    (F.rand()*10).cast(\"int\")\n",
-					"  )\n",
-					").withColumnRenamed('Address','HomeAddress')"
+					"\n",
+					"display(raw_cust.limit(10))"
 				],
-				"execution_count": 3
+				"execution_count": 8
 			},
 			{
 				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
 				"source": [
-					"finalCustomer.write.format('parquet').mode('overwrite').save(\"abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/Stage/Customer/Customers\")"
+					"customer = raw_cust.select('CustomerId','Age','ZipCode','FirstName','LastName','DateOfBirth','Email','Address','Gender')\r\n",
+					"finalCustomer = customer.withColumn (\r\n",
+					"    \"Location-ID\",\r\n",
+					"    F.array(\r\n",
+					"        F.lit(\"location-id-1\"),\r\n",
+					"        F.lit(\"location-id-2\"),\r\n",
+					"        F.lit(\"location-id-3\"),\r\n",
+					"        F.lit(\"location-id-4\"),\r\n",
+					"        F.lit(\"location-id-5\"),\r\n",
+					"        F.lit(\"location-id-6\"),\r\n",
+					"        F.lit(\"location-id-7\"),\r\n",
+					"        F.lit(\"location-id-8\"),\r\n",
+					"        F.lit(\"location-id-9\"),\r\n",
+					"        F.lit(\"location-id-10\")\r\n",
+					"    ).getItem((F.rand()*10).cast(\"int\"))\r\n",
+					").withColumnRenamed('Address','HomeAddress')\r\n",
+					"\r\n",
+					"display(finalCustomer.limit(10))"
 				],
 				"execution_count": 9
 			},
 			{
 				"cell_type": "code",
 				"source": [
-					"finalCustomer.write.format('parquet').mode('overwrite').save(\"abfss://synapse@mybigdatalake.dfs.core.windows.net/JLL/acltest/Customers\")"
+					"finalCustomer.write.option(\"header\", \"true\").mode('overwrite').parquet(\"abfss://silver@vvssjupq6khjbr7mpoc.dfs.core.windows.net/facilities/customers\")"
 				],
-				"execution_count": 5
+				"execution_count": 10
 			},
 			{
 				"cell_type": "code",
