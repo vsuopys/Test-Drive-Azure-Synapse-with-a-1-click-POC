@@ -1,10 +1,10 @@
 {
-	"name": "Reseller",
+	"name": "Reseller_1",
 	"properties": {
 		"Namespace": {
 			"DatabaseName": "adworks"
 		},
-		"Name": "Reseller",
+		"Name": "Reseller_1",
 		"Description": "",
 		"EntityType": "TABLE",
 		"TableType": "EXTERNAL",
