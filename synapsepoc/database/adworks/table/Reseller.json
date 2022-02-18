@@ -19,7 +19,7 @@
 						"TypeName": "string",
 						"IsComplexType": false,
 						"IsNullable": true,
-						"Length": 8000,
+						"Length": 256,
 						"Properties": {
 							"HIVE_TYPE_STRING": "string"
 						}
@@ -31,7 +31,7 @@
 						"TypeName": "string",
 						"IsComplexType": false,
 						"IsNullable": true,
-						"Length": 8000,
+						"Length": 256,
 						"Properties": {
 							"HIVE_TYPE_STRING": "string"
 						}
@@ -43,7 +43,7 @@
 						"TypeName": "string",
 						"IsComplexType": false,
 						"IsNullable": true,
-						"Length": 8000,
+						"Length": 256,
 						"Properties": {
 							"HIVE_TYPE_STRING": "string"
 						}
@@ -55,7 +55,7 @@
 						"TypeName": "string",
 						"IsComplexType": false,
 						"IsNullable": true,
-						"Length": 8000,
+						"Length": 256,
 						"Properties": {
 							"HIVE_TYPE_STRING": "string"
 						}
@@ -67,7 +67,7 @@
 						"TypeName": "string",
 						"IsComplexType": false,
 						"IsNullable": true,
-						"Length": 8000,
+						"Length": 256,
 						"Properties": {
 							"HIVE_TYPE_STRING": "string"
 						}
@@ -79,7 +79,7 @@
 						"TypeName": "string",
 						"IsComplexType": false,
 						"IsNullable": true,
-						"Length": 8000,
+						"Length": 256,
 						"Properties": {
 							"HIVE_TYPE_STRING": "string"
 						}
@@ -91,7 +91,7 @@
 						"TypeName": "string",
 						"IsComplexType": false,
 						"IsNullable": true,
-						"Length": 8000,
+						"Length": 256,
 						"Properties": {
 							"HIVE_TYPE_STRING": "string"
 						}
