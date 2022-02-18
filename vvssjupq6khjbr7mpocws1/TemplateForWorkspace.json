@@ -3929,6 +3929,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) *\n FROM [adworks].[dbo].[CustomerData]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Date]   -- works\n\n\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[ProductData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Reseller]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Sales]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesOrder]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesTerritory]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "adworks",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/1 MergeCustLocations')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -4863,7 +4883,7 @@
 										"multiLine": "false",
 										"firstRowAsHeader": "true",
 										"serialization.format": "1",
-										"FormatTypeSetToDatabaseDefault": false,
+										"FormatTypeSetToDatabaseDefault": true,
 										"header": "true"
 									}
 								},
@@ -4872,7 +4892,7 @@
 									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/CustomerData",
 									"Properties": {
 										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": false
+										"LocationSetToDatabaseDefault": true
 									}
 								},
 								"Properties": {
@@ -4891,8 +4911,7 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -5009,7 +5028,7 @@
 										"multiLine": "false",
 										"firstRowAsHeader": "true",
 										"serialization.format": "1",
-										"FormatTypeSetToDatabaseDefault": false,
+										"FormatTypeSetToDatabaseDefault": true,
 										"header": "true"
 									}
 								},
@@ -5018,7 +5037,7 @@
 									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/Date",
 									"Properties": {
 										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": false
+										"LocationSetToDatabaseDefault": true
 									}
 								},
 								"Properties": {
@@ -5037,8 +5056,7 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -5176,21 +5194,21 @@
 									"FormatType": "csv",
 									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
 									"Properties": {
-										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/ProductData",
+										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/ProductData",
 										"delimiter": ",",
 										"multiLine": "false",
 										"firstRowAsHeader": "true",
 										"serialization.format": "1",
-										"FormatTypeSetToDatabaseDefault": false,
+										"FormatTypeSetToDatabaseDefault": true,
 										"header": "true"
 									}
 								},
 								"Source": {
 									"Provider": "ADLS",
-									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/ProductData",
+									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/ProductData",
 									"Properties": {
 										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": false
+										"LocationSetToDatabaseDefault": true
 									}
 								},
 								"Properties": {
@@ -5209,8 +5227,7 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -5339,7 +5356,7 @@
 										"multiLine": "false",
 										"firstRowAsHeader": "true",
 										"serialization.format": "1",
-										"FormatTypeSetToDatabaseDefault": false,
+										"FormatTypeSetToDatabaseDefault": true,
 										"header": "true"
 									}
 								},
@@ -5348,7 +5365,7 @@
 									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/Reseller",
 									"Properties": {
 										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": false
+										"LocationSetToDatabaseDefault": true
 									}
 								},
 								"Properties": {
@@ -5367,8 +5384,7 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -5574,21 +5590,21 @@
 									"FormatType": "csv",
 									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
 									"Properties": {
-										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/Sales",
+										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/Sales",
 										"delimiter": ",",
 										"multiLine": "false",
 										"firstRowAsHeader": "true",
 										"serialization.format": "1",
-										"FormatTypeSetToDatabaseDefault": false,
+										"FormatTypeSetToDatabaseDefault": true,
 										"header": "true"
 									}
 								},
 								"Source": {
 									"Provider": "ADLS",
-									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/Sales",
+									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/Sales",
 									"Properties": {
 										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": false
+										"LocationSetToDatabaseDefault": true
 									}
 								},
 								"Properties": {
@@ -5683,21 +5699,21 @@
 									"FormatType": "csv",
 									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
 									"Properties": {
-										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/SalesOrder",
+										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/SalesOrder",
 										"delimiter": ",",
 										"multiLine": "false",
 										"firstRowAsHeader": "true",
 										"serialization.format": "1",
-										"FormatTypeSetToDatabaseDefault": false,
+										"FormatTypeSetToDatabaseDefault": true,
 										"header": "true"
 									}
 								},
 								"Source": {
 									"Provider": "ADLS",
-									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/SalesOrder",
+									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/SalesOrder",
 									"Properties": {
 										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": false
+										"LocationSetToDatabaseDefault": true
 									}
 								},
 								"Properties": {
@@ -5716,8 +5732,7 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -5793,21 +5808,21 @@
 									"FormatType": "csv",
 									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
 									"Properties": {
-										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/SalesTerritory",
+										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/SalesTerritory",
 										"delimiter": ",",
 										"multiLine": "false",
 										"firstRowAsHeader": "true",
 										"serialization.format": "1",
-										"FormatTypeSetToDatabaseDefault": false,
+										"FormatTypeSetToDatabaseDefault": true,
 										"header": "true"
 									}
 								},
 								"Source": {
 									"Provider": "ADLS",
-									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/SalesTerritory",
+									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/SalesTerritory",
 									"Properties": {
 										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": false
+										"LocationSetToDatabaseDefault": true
 									}
 								},
 								"Properties": {
@@ -5826,8 +5841,7 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -7184,26 +7198,6 @@
 			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) *\n FROM [adworks].[dbo].[CustomerData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Date]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[ProductData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Reseller]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Sales]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesOrder]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesTerritory]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "adworks",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
 			"dependsOn": []
 		}
 	]
