@@ -21,9 +21,9 @@
 							"modifiedBefore": "currentTimestamp()"
 						}
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "MyAutoresolveIR",
+						"type": "IntegrationRuntimeReference"
 					},
 					"traceLevel": "Fine"
 				}
