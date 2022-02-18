@@ -2,7 +2,7 @@
 	"name": "SQL script 1",
 	"properties": {
 		"content": {
-			"query": "SELECT TOP (100) *\n FROM [adworks].[dbo].[CustomerData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Date]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[ProductData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Reseller]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Sales]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesOrder]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesTerritory]",
+			"query": "SELECT TOP (100) *\n FROM [adworks].[dbo].[CustomerData]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Date]   -- works\n\n\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[ProductData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Reseller]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Sales]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesOrder]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesTerritory]",
 			"metadata": {
 				"language": "sql"
 			},
