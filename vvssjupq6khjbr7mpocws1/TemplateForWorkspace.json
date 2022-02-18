@@ -411,9 +411,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -442,9 +442,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -462,6 +462,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/dataflows/ChannelType_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]",
 				"[concat(variables('workspaceId'), '/dataflows/Territory_DataFlow1')]"
 			]
 		},
@@ -496,9 +497,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -515,7 +516,8 @@
 				"lastPublishTime": "2021-09-23T14:31:16Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/Country_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/Country_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -548,9 +550,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -567,7 +569,8 @@
 				"lastPublishTime": "2021-09-23T14:31:23Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/IndividualCustomer_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/IndividualCustomer_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -600,9 +603,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -631,9 +634,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -651,6 +654,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/dataflows/Item_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]",
 				"[concat(variables('workspaceId'), '/dataflows/ProductCategoryDim_DataFlow1')]"
 			]
 		},
@@ -686,9 +690,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -705,7 +709,8 @@
 				"lastPublishTime": "2021-09-23T14:31:36Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/Location_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/Location_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -741,9 +746,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -760,7 +765,8 @@
 				"lastPublishTime": "2021-09-23T14:39:52Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/Channel_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/Channel_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -794,9 +800,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -813,7 +819,8 @@
 				"lastPublishTime": "2021-09-23T14:39:57Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/Country2_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/Country2_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -848,9 +855,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -867,7 +874,8 @@
 				"lastPublishTime": "2021-09-23T14:40:02Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/Location2_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/Location2_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -900,9 +908,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -919,7 +927,8 @@
 				"lastPublishTime": "2021-09-23T14:40:10Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/Product_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/Product_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -954,9 +963,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -973,7 +982,8 @@
 				"lastPublishTime": "2021-09-23T14:42:43Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/Customer_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/Customer_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -1007,9 +1017,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -1026,7 +1036,8 @@
 				"lastPublishTime": "2021-09-23T14:42:48Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/TransactionLineItem_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/TransactionLineItem_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -1062,9 +1073,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "MyAutoresolveIR",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -1081,7 +1092,8 @@
 				"lastPublishTime": "2021-09-23T14:42:54Z"
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/dataflows/Transaction_DataFlow1')]"
+				"[concat(variables('workspaceId'), '/dataflows/Transaction_DataFlow1')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -2532,12 +2544,12 @@
 					"connectionString": "[parameters('DemoDB_connectionString')]"
 				},
 				"connectVia": {
-					"referenceName": "AutoResolveIntegrationRuntime",
+					"referenceName": "MyAutoresolveIR",
 					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+				"[concat(variables('workspaceId'), '/integrationRuntimes/MyAutoresolveIR')]"
 			]
 		},
 		{
@@ -3934,12 +3946,12 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "SELECT TOP (100) *\n FROM [adworks].[dbo].[CustomerData]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Date]   -- works\n\n\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[ProductData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Reseller]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Sales]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesOrder]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesTerritory]",
+					"query": "SELECT TOP (100) *\n FROM [adworks].[dbo].[CustomerData]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Date]   -- works\n\n\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[ProductData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Reseller]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Sales]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesOrder]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesTerritory]\n\n\n\n\n SELECT COUNT(1)\n FROM [adworkstarget].[dbo].[Channel] \n\n SELECT COUNT(1)\n FROM [adworkstarget].[dbo].[ChannelType] \n \n SELECT COUNT(1)\n FROM [adworkstarget].[dbo].[Country] \n \n SELECT COUNT(1)\n FROM [adworkstarget].[dbo].[Customer] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[IndividualCustomer] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Item] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Location] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Product] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[ProductCategoryDim] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[ProductDimCategory] -- no records\n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Territory] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Transaction] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[TransactionLineItem] \n",
 					"metadata": {
 						"language": "sql"
 					},
 					"currentConnection": {
-						"databaseName": "adworks",
+						"databaseName": "adworkstarget",
 						"poolName": "Built-in"
 					},
 					"resultLimit": 5000
@@ -7199,6 +7211,32 @@
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/MyAutoresolveIR')]",
+			"type": "Microsoft.Synapse/workspaces/integrationRuntimes",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 15,
+							"cleanup": false
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('workspaceId'), '/managedVirtualNetworks/default')]"
+			]
 		}
 	]
 }
