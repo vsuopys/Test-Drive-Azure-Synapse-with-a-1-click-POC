@@ -4785,7 +4785,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4797,7 +4797,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4809,7 +4809,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4821,7 +4821,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4833,7 +4833,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4845,7 +4845,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4891,7 +4891,8 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false
+							"IsRewriteEnabled": false,
+							"Partitioning": {}
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -4916,22 +4917,23 @@
 									{
 										"Name": "DateKey",
 										"OriginDataTypeName": {
-											"TypeName": "long",
+											"TypeName": "integer",
 											"IsComplexType": false,
 											"IsNullable": true,
 											"Properties": {
-												"HIVE_TYPE_STRING": "long"
+												"HIVE_TYPE_STRING": "integer"
 											}
 										}
 									},
 									{
 										"Name": "Date",
 										"OriginDataTypeName": {
-											"TypeName": "long",
+											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
+											"Length": 256,
 											"Properties": {
-												"HIVE_TYPE_STRING": "long"
+												"HIVE_TYPE_STRING": "string"
 											}
 										}
 									},
@@ -4941,7 +4943,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4953,7 +4955,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4965,7 +4967,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4977,7 +4979,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -4986,11 +4988,12 @@
 									{
 										"Name": "MonthKey",
 										"OriginDataTypeName": {
-											"TypeName": "integer",
+											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
+											"Length": 256,
 											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
+												"HIVE_TYPE_STRING": "string"
 											}
 										}
 									}
@@ -5001,7 +5004,7 @@
 									"FormatType": "csv",
 									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
 									"Properties": {
-										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/Date",
+										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/Date",
 										"delimiter": ",",
 										"multiLine": "false",
 										"firstRowAsHeader": "true",
@@ -5012,7 +5015,7 @@
 								},
 								"Source": {
 									"Provider": "ADLS",
-									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/Date",
+									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/Date",
 									"Properties": {
 										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
 										"LocationSetToDatabaseDefault": false
@@ -5034,7 +5037,8 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false
+							"IsRewriteEnabled": false,
+							"Partitioning": {}
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -5062,7 +5066,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5074,7 +5078,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5086,7 +5090,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5111,7 +5115,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5136,7 +5140,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5148,7 +5152,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5205,7 +5209,8 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false
+							"IsRewriteEnabled": false,
+							"Partitioning": {}
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -5233,7 +5238,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5245,7 +5250,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5257,7 +5262,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5269,7 +5274,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5281,7 +5286,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5293,7 +5298,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5305,7 +5310,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5362,7 +5367,8 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false
+							"IsRewriteEnabled": false,
+							"Partitioning": {}
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -5629,7 +5635,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5641,7 +5647,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5664,7 +5670,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5710,7 +5716,8 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false
+							"IsRewriteEnabled": false,
+							"Partitioning": {}
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -5749,7 +5756,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5761,7 +5768,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5773,7 +5780,7 @@
 											"TypeName": "string",
 											"IsComplexType": false,
 											"IsNullable": true,
-											"Length": 8000,
+											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
 											}
@@ -5819,7 +5826,8 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false
+							"IsRewriteEnabled": false,
+							"Partitioning": {}
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -7176,6 +7184,26 @@
 			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) *\n FROM [adworks].[dbo].[CustomerData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Date]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[ProductData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Reseller]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Sales]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesOrder]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesTerritory]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "adworks",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
 			"dependsOn": []
 		}
 	]
