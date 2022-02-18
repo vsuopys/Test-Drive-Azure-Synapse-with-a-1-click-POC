@@ -108,7 +108,7 @@
 					"multiLine": "false",
 					"firstRowAsHeader": "true",
 					"serialization.format": "1",
-					"FormatTypeSetToDatabaseDefault": false,
+					"FormatTypeSetToDatabaseDefault": true,
 					"header": "true"
 				}
 			},
@@ -117,7 +117,7 @@
 				"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/Date",
 				"Properties": {
 					"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-					"LocationSetToDatabaseDefault": false
+					"LocationSetToDatabaseDefault": true
 				}
 			},
 			"Properties": {

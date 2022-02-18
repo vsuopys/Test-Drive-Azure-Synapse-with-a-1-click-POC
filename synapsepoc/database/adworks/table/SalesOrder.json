@@ -67,21 +67,21 @@
 				"FormatType": "csv",
 				"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
 				"Properties": {
-					"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/SalesOrder",
+					"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/SalesOrder",
 					"delimiter": ",",
 					"multiLine": "false",
 					"firstRowAsHeader": "true",
 					"serialization.format": "1",
-					"FormatTypeSetToDatabaseDefault": false,
+					"FormatTypeSetToDatabaseDefault": true,
 					"header": "true"
 				}
 			},
 			"Source": {
 				"Provider": "ADLS",
-				"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworks/SalesOrder",
+				"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/SalesOrder",
 				"Properties": {
 					"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-					"LocationSetToDatabaseDefault": false
+					"LocationSetToDatabaseDefault": true
 				}
 			},
 			"Properties": {
