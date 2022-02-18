@@ -13,7 +13,7 @@
 			"Provider": "ADLS",
 			"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget",
 			"Properties": {
-				"FormatType": "csv",
+				"FormatType": "parquet",
 				"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage"
 			}
 		}
