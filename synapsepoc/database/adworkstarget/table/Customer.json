@@ -1,10 +1,10 @@
 {
-	"name": "IndividualCustomer",
+	"name": "Customer",
 	"properties": {
 		"Namespace": {
 			"DatabaseName": "adworkstarget"
 		},
-		"Name": "IndividualCustomer",
+		"Name": "Customer",
 		"Description": "",
 		"EntityType": "TABLE",
 		"TableType": "EXTERNAL",
@@ -17,22 +17,35 @@
 					"Name": "CustomerId",
 					"OriginDataTypeName": {
 						"TypeName": "integer",
-						"IsComplexType": false,
 						"IsNullable": false,
+						"IsComplexType": false,
 						"Properties": {
 							"HIVE_TYPE_STRING": "integer"
 						}
 					}
 				},
 				{
-					"Name": "IndividualCustomerName",
+					"Name": "CustomerKey",
+					"Description": "",
 					"OriginDataTypeName": {
 						"TypeName": "string",
+						"IsNullable": false,
 						"IsComplexType": false,
-						"IsNullable": true,
-						"Length": 8000,
+						"Length": 256,
 						"Properties": {
 							"HIVE_TYPE_STRING": "string"
+						}
+					}
+				},
+				{
+					"Name": "LocationId",
+					"Description": "",
+					"OriginDataTypeName": {
+						"TypeName": "integer",
+						"IsNullable": false,
+						"IsComplexType": false,
+						"Properties": {
+							"HIVE_TYPE_STRING": "integer"
 						}
 					}
 				}
@@ -43,16 +56,16 @@
 				"FormatType": "parquet",
 				"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
 				"Properties": {
-					"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworkstarget/IndividualCustomer",
-					"FormatTypeSetToDatabaseDefault": false
+					"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Customer",
+					"FormatTypeSetToDatabaseDefault": true
 				}
 			},
 			"Source": {
 				"Provider": "ADLS",
-				"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net//adworkstarget/IndividualCustomer",
+				"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Customer",
 				"Properties": {
 					"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-					"LocationSetToDatabaseDefault": false
+					"LocationSetToDatabaseDefault": true
 				}
 			},
 			"Properties": {
