@@ -462,7 +462,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('workspaceId'), '/dataflows/ChannelType_DataFlow1')]",
-				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('workspaceId'), '/dataflows/Territory_DataFlow1')]"
 			]
 		},
@@ -5219,7 +5218,7 @@
 							"Namespace": {
 								"DatabaseName": "adworks"
 							},
-							"Name": "Reseller_1",
+							"Name": "Reseller",
 							"Description": "",
 							"EntityType": "TABLE",
 							"TableType": "EXTERNAL",
@@ -5825,163 +5824,6 @@
 						"Source": {
 							"Type": "SPARK"
 						}
-					},
-					{
-						"ActionType": "CREATE",
-						"OldEntity": null,
-						"NewEntity": {
-							"Namespace": {
-								"DatabaseName": "adworks"
-							},
-							"Name": "Reseller",
-							"Description": "",
-							"EntityType": "TABLE",
-							"TableType": "EXTERNAL",
-							"Origin": {
-								"Type": "SPARK"
-							},
-							"StorageDescriptor": {
-								"Columns": [
-									{
-										"Name": "PostalCode",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsComplexType": false,
-											"IsNullable": true,
-											"Length": 8000,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "CountryRegion",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsComplexType": false,
-											"IsNullable": true,
-											"Length": 8000,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "StateProvince",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsComplexType": false,
-											"IsNullable": true,
-											"Length": 8000,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "City",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsComplexType": false,
-											"IsNullable": true,
-											"Length": 8000,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "Reseller",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsComplexType": false,
-											"IsNullable": true,
-											"Length": 8000,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "BusinessType",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsComplexType": false,
-											"IsNullable": true,
-											"Length": 8000,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "ResellerId",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsComplexType": false,
-											"IsNullable": true,
-											"Length": 8000,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "ResellerKey",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsComplexType": false,
-											"IsNullable": true,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									}
-								],
-								"Format": {
-									"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
-									"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
-									"FormatType": "csv",
-									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
-									"Properties": {
-										"path": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/Reseller",
-										"delimiter": ",",
-										"multiLine": "false",
-										"firstRowAsHeader": "true",
-										"serialization.format": "1",
-										"FormatTypeSetToDatabaseDefault": false,
-										"header": "true"
-									}
-								},
-								"Source": {
-									"Provider": "ADLS",
-									"Location": "abfss://raw@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworks/Reseller",
-									"Properties": {
-										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": false
-									}
-								},
-								"Properties": {
-									"textinputformat.record.delimiter": ",",
-									"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
-									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
-								},
-								"Compressed": false,
-								"IsStoredAsSubdirectories": false
-							},
-							"Properties": {
-								"Description": "",
-								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "",
-								"spark.sql.sources.provider": "csv"
-							},
-							"Retention": 0,
-							"Temporary": false,
-							"IsRewriteEnabled": false
-						},
-						"Source": {
-							"Type": "SPARK"
-						}
 					}
 				]
 			},
@@ -6013,6 +5855,379 @@
 									"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage"
 								}
 							}
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "adworkstarget"
+							},
+							"Name": "Channel",
+							"Description": "",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "ChannelId",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "ChannelName",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "ChannelTypeId",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "TerritoryId",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "ChannelKey",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+									"FormatType": "parquet",
+									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+									"Properties": {
+										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Channel",
+										"FormatTypeSetToDatabaseDefault": true
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Channel",
+									"Properties": {
+										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"Description": "",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"PrimaryKeys": "ChannelId",
+								"spark.sql.sources.provider": "parquet"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "adworkstarget"
+							},
+							"Name": "ChannelType",
+							"Description": "",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "ChannelTypeId",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "ChannelTypeName",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+									"FormatType": "parquet",
+									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+									"Properties": {
+										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/ChannelType",
+										"FormatTypeSetToDatabaseDefault": true
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/ChannelType",
+									"Properties": {
+										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"Description": "",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"PrimaryKeys": "ChannelTypeId",
+								"spark.sql.sources.provider": "parquet"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "adworkstarget"
+							},
+							"Name": "Country",
+							"Description": "",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "CountryId",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "IsoCountryName",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+									"FormatType": "parquet",
+									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+									"Properties": {
+										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Country",
+										"FormatTypeSetToDatabaseDefault": true
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Country",
+									"Properties": {
+										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"Description": "",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"PrimaryKeys": "CountryId",
+								"spark.sql.sources.provider": "parquet"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "adworkstarget"
+							},
+							"Name": "Customer",
+							"Description": "",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "CustomerId",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "CustomerKey",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "LocationId",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+									"FormatType": "parquet",
+									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+									"Properties": {
+										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Customer",
+										"FormatTypeSetToDatabaseDefault": true
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Customer",
+									"Properties": {
+										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"Description": "",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"PrimaryKeys": "CustomerId",
+								"spark.sql.sources.provider": "parquet"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -6092,210 +6307,7 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
-						},
-						"Source": {
-							"Type": "SPARK"
-						}
-					},
-					{
-						"ActionType": "CREATE",
-						"OldEntity": null,
-						"NewEntity": {
-							"Namespace": {
-								"DatabaseName": "adworkstarget"
-							},
-							"Name": "Customer",
-							"Description": "",
-							"EntityType": "TABLE",
-							"TableType": "EXTERNAL",
-							"Origin": {
-								"Type": "SPARK"
-							},
-							"StorageDescriptor": {
-								"Columns": [
-									{
-										"Name": "CustomerId",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "CustomerKey",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "LocationId",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									}
-								],
-								"Format": {
-									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
-									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
-									"FormatType": "parquet",
-									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
-									"Properties": {
-										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Customer",
-										"FormatTypeSetToDatabaseDefault": true
-									}
-								},
-								"Source": {
-									"Provider": "ADLS",
-									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Customer",
-									"Properties": {
-										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": true
-									}
-								},
-								"Properties": {
-									"textinputformat.record.delimiter": ",",
-									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
-									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
-								},
-								"Compressed": false,
-								"IsStoredAsSubdirectories": false
-							},
-							"Properties": {
-								"Description": "",
-								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "CustomerId",
-								"spark.sql.sources.provider": "parquet"
-							},
-							"Retention": 0,
-							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
-						},
-						"Source": {
-							"Type": "SPARK"
-						}
-					},
-					{
-						"ActionType": "CREATE",
-						"OldEntity": null,
-						"NewEntity": {
-							"Namespace": {
-								"DatabaseName": "adworkstarget"
-							},
-							"Name": "ProductDimCategory",
-							"Description": "",
-							"EntityType": "TABLE",
-							"TableType": "EXTERNAL",
-							"Origin": {
-								"Type": "SPARK"
-							},
-							"StorageDescriptor": {
-								"Columns": [
-									{
-										"Name": "ProductId",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "Model",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "Category",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "Subcategory",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									}
-								],
-								"Format": {
-									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
-									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
-									"FormatType": "parquet",
-									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
-									"Properties": {
-										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/ProductDimCategory",
-										"FormatTypeSetToDatabaseDefault": true
-									}
-								},
-								"Source": {
-									"Provider": "ADLS",
-									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/ProductDimCategory",
-									"Properties": {
-										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": true
-									}
-								},
-								"Properties": {
-									"textinputformat.record.delimiter": ",",
-									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
-									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
-								},
-								"Compressed": false,
-								"IsStoredAsSubdirectories": false
-							},
-							"Properties": {
-								"Description": "",
-								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "ProductId",
-								"spark.sql.sources.provider": "parquet"
-							},
-							"Retention": 0,
-							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -6321,8 +6333,8 @@
 										"Name": "ItemSku",
 										"OriginDataTypeName": {
 											"TypeName": "string",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
 											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
@@ -6334,8 +6346,8 @@
 										"Description": "",
 										"OriginDataTypeName": {
 											"TypeName": "decimal",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
 											"Precision": 18,
 											"Scale": 2,
 											"Properties": {
@@ -6348,8 +6360,8 @@
 										"Description": "",
 										"OriginDataTypeName": {
 											"TypeName": "decimal",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
 											"Precision": 18,
 											"Scale": 2,
 											"Properties": {
@@ -6392,732 +6404,7 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
-						},
-						"Source": {
-							"Type": "SPARK"
-						}
-					},
-					{
-						"ActionType": "CREATE",
-						"OldEntity": null,
-						"NewEntity": {
-							"Namespace": {
-								"DatabaseName": "adworkstarget"
-							},
-							"Name": "Product",
-							"Description": "",
-							"EntityType": "TABLE",
-							"TableType": "EXTERNAL",
-							"Origin": {
-								"Type": "SPARK"
-							},
-							"StorageDescriptor": {
-								"Columns": [
-									{
-										"Name": "ProductId",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "ProductName",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "ItemSku",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "ProductColor",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									}
-								],
-								"Format": {
-									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
-									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
-									"FormatType": "parquet",
-									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
-									"Properties": {
-										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Product",
-										"FormatTypeSetToDatabaseDefault": true
-									}
-								},
-								"Source": {
-									"Provider": "ADLS",
-									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Product",
-									"Properties": {
-										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": true
-									}
-								},
-								"Properties": {
-									"textinputformat.record.delimiter": ",",
-									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
-									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
-								},
-								"Compressed": false,
-								"IsStoredAsSubdirectories": false
-							},
-							"Properties": {
-								"Description": "",
-								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "ProductId",
-								"spark.sql.sources.provider": "parquet"
-							},
-							"Retention": 0,
-							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
-						},
-						"Source": {
-							"Type": "SPARK"
-						}
-					},
-					{
-						"ActionType": "CREATE",
-						"OldEntity": null,
-						"NewEntity": {
-							"Namespace": {
-								"DatabaseName": "adworkstarget"
-							},
-							"Name": "TransactionLineItem",
-							"Description": "",
-							"EntityType": "TABLE",
-							"TableType": "EXTERNAL",
-							"Origin": {
-								"Type": "SPARK"
-							},
-							"StorageDescriptor": {
-								"Columns": [
-									{
-										"Name": "TransactionId",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "TransactionLineItemId",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "ProductId",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "Quantity",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "decimal",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Precision": 18,
-											"Scale": 2,
-											"Properties": {
-												"HIVE_TYPE_STRING": "decimal"
-											}
-										}
-									},
-									{
-										"Name": "ProductListPriceAmount",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "decimal",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Precision": 18,
-											"Scale": 2,
-											"Properties": {
-												"HIVE_TYPE_STRING": "decimal"
-											}
-										}
-									},
-									{
-										"Name": "TransactionProductPriceAmount",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "decimal",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Precision": 18,
-											"Scale": 2,
-											"Properties": {
-												"HIVE_TYPE_STRING": "decimal"
-											}
-										}
-									},
-									{
-										"Name": "TotalTransactionLineItemAmount",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "decimal",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Precision": 18,
-											"Scale": 2,
-											"Properties": {
-												"HIVE_TYPE_STRING": "decimal"
-											}
-										}
-									},
-									{
-										"Name": "TotalTransactionSalesPriceAmount",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "decimal",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Precision": 18,
-											"Scale": 2,
-											"Properties": {
-												"HIVE_TYPE_STRING": "decimal"
-											}
-										}
-									},
-									{
-										"Name": "ProductPriceAdjustmentPercentage",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "OrderDateKey",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "DueDateKey",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "ShipDateKey",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									}
-								],
-								"Format": {
-									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
-									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
-									"FormatType": "parquet",
-									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
-									"Properties": {
-										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/TransactionLineItem",
-										"FormatTypeSetToDatabaseDefault": true
-									}
-								},
-								"Source": {
-									"Provider": "ADLS",
-									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/TransactionLineItem",
-									"Properties": {
-										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": true
-									}
-								},
-								"Properties": {
-									"textinputformat.record.delimiter": ",",
-									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
-									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
-								},
-								"Compressed": false,
-								"IsStoredAsSubdirectories": false
-							},
-							"Properties": {
-								"Description": "",
-								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "TransactionLineItemId",
-								"spark.sql.sources.provider": "parquet"
-							},
-							"Retention": 0,
-							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
-						},
-						"Source": {
-							"Type": "SPARK"
-						}
-					},
-					{
-						"ActionType": "CREATE",
-						"OldEntity": null,
-						"NewEntity": {
-							"Namespace": {
-								"DatabaseName": "adworkstarget"
-							},
-							"Name": "Transaction",
-							"Description": "",
-							"EntityType": "TABLE",
-							"TableType": "EXTERNAL",
-							"Origin": {
-								"Type": "SPARK"
-							},
-							"StorageDescriptor": {
-								"Columns": [
-									{
-										"Name": "TransactionId",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "CustomerId",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "ChannelId",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									}
-								],
-								"Format": {
-									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
-									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
-									"FormatType": "parquet",
-									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
-									"Properties": {
-										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Transaction",
-										"FormatTypeSetToDatabaseDefault": true
-									}
-								},
-								"Source": {
-									"Provider": "ADLS",
-									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Transaction",
-									"Properties": {
-										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": true
-									}
-								},
-								"Properties": {
-									"textinputformat.record.delimiter": ",",
-									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
-									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
-								},
-								"Compressed": false,
-								"IsStoredAsSubdirectories": false
-							},
-							"Properties": {
-								"Description": "",
-								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "TransactionId",
-								"spark.sql.sources.provider": "parquet"
-							},
-							"Retention": 0,
-							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
-						},
-						"Source": {
-							"Type": "SPARK"
-						}
-					},
-					{
-						"ActionType": "CREATE",
-						"OldEntity": null,
-						"NewEntity": {
-							"Namespace": {
-								"DatabaseName": "adworkstarget"
-							},
-							"Name": "Channel",
-							"Description": "",
-							"EntityType": "TABLE",
-							"TableType": "EXTERNAL",
-							"Origin": {
-								"Type": "SPARK"
-							},
-							"StorageDescriptor": {
-								"Columns": [
-									{
-										"Name": "ChannelId",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "ChannelName",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "ChannelTypeId",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "TerritoryId",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "ChannelKey",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									}
-								],
-								"Format": {
-									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
-									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
-									"FormatType": "parquet",
-									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
-									"Properties": {
-										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Channel",
-										"FormatTypeSetToDatabaseDefault": true
-									}
-								},
-								"Source": {
-									"Provider": "ADLS",
-									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Channel",
-									"Properties": {
-										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": true
-									}
-								},
-								"Properties": {
-									"textinputformat.record.delimiter": ",",
-									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
-									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
-								},
-								"Compressed": false,
-								"IsStoredAsSubdirectories": false
-							},
-							"Properties": {
-								"Description": "",
-								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "ChannelId",
-								"spark.sql.sources.provider": "parquet"
-							},
-							"Retention": 0,
-							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
-						},
-						"Source": {
-							"Type": "SPARK"
-						}
-					},
-					{
-						"ActionType": "CREATE",
-						"OldEntity": null,
-						"NewEntity": {
-							"Namespace": {
-								"DatabaseName": "adworkstarget"
-							},
-							"Name": "ChannelType",
-							"Description": "",
-							"EntityType": "TABLE",
-							"TableType": "EXTERNAL",
-							"Origin": {
-								"Type": "SPARK"
-							},
-							"StorageDescriptor": {
-								"Columns": [
-									{
-										"Name": "ChannelTypeId",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "ChannelTypeName",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									}
-								],
-								"Format": {
-									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
-									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
-									"FormatType": "parquet",
-									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
-									"Properties": {
-										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/ChannelType",
-										"FormatTypeSetToDatabaseDefault": true
-									}
-								},
-								"Source": {
-									"Provider": "ADLS",
-									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/ChannelType",
-									"Properties": {
-										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": true
-									}
-								},
-								"Properties": {
-									"textinputformat.record.delimiter": ",",
-									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
-									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
-								},
-								"Compressed": false,
-								"IsStoredAsSubdirectories": false
-							},
-							"Properties": {
-								"Description": "",
-								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "ChannelTypeId",
-								"spark.sql.sources.provider": "parquet"
-							},
-							"Retention": 0,
-							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
-						},
-						"Source": {
-							"Type": "SPARK"
-						}
-					},
-					{
-						"ActionType": "CREATE",
-						"OldEntity": null,
-						"NewEntity": {
-							"Namespace": {
-								"DatabaseName": "adworkstarget"
-							},
-							"Name": "Territory",
-							"Description": "",
-							"EntityType": "TABLE",
-							"TableType": "EXTERNAL",
-							"Origin": {
-								"Type": "SPARK"
-							},
-							"StorageDescriptor": {
-								"Columns": [
-									{
-										"Name": "TerritoryId",
-										"OriginDataTypeName": {
-											"TypeName": "integer",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Properties": {
-												"HIVE_TYPE_STRING": "integer"
-											}
-										}
-									},
-									{
-										"Name": "Group",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "Country",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									},
-									{
-										"Name": "Region",
-										"Description": "",
-										"OriginDataTypeName": {
-											"TypeName": "string",
-											"IsNullable": false,
-											"IsComplexType": false,
-											"Length": 256,
-											"Properties": {
-												"HIVE_TYPE_STRING": "string"
-											}
-										}
-									}
-								],
-								"Format": {
-									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
-									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
-									"FormatType": "parquet",
-									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
-									"Properties": {
-										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Territory",
-										"FormatTypeSetToDatabaseDefault": true
-									}
-								},
-								"Source": {
-									"Provider": "ADLS",
-									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Territory",
-									"Properties": {
-										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
-										"LocationSetToDatabaseDefault": true
-									}
-								},
-								"Properties": {
-									"textinputformat.record.delimiter": ",",
-									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
-									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
-								},
-								"Compressed": false,
-								"IsStoredAsSubdirectories": false
-							},
-							"Properties": {
-								"Description": "",
-								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "TerritoryId",
-								"spark.sql.sources.provider": "parquet"
-							},
-							"Retention": 0,
-							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -7143,8 +6430,8 @@
 										"Name": "LocationId",
 										"OriginDataTypeName": {
 											"TypeName": "integer",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
 											"Properties": {
 												"HIVE_TYPE_STRING": "integer"
 											}
@@ -7155,8 +6442,8 @@
 										"Description": "",
 										"OriginDataTypeName": {
 											"TypeName": "string",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
 											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
@@ -7168,8 +6455,8 @@
 										"Description": "",
 										"OriginDataTypeName": {
 											"TypeName": "string",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
 											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
@@ -7181,8 +6468,8 @@
 										"Description": "",
 										"OriginDataTypeName": {
 											"TypeName": "integer",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
 											"Properties": {
 												"HIVE_TYPE_STRING": "integer"
 											}
@@ -7193,8 +6480,8 @@
 										"Description": "",
 										"OriginDataTypeName": {
 											"TypeName": "string",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
 											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
@@ -7236,8 +6523,7 @@
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
@@ -7250,7 +6536,7 @@
 							"Namespace": {
 								"DatabaseName": "adworkstarget"
 							},
-							"Name": "Country",
+							"Name": "Product",
 							"Description": "",
 							"EntityType": "TABLE",
 							"TableType": "EXTERNAL",
@@ -7260,23 +6546,49 @@
 							"StorageDescriptor": {
 								"Columns": [
 									{
-										"Name": "CountryId",
+										"Name": "ProductId",
 										"OriginDataTypeName": {
 											"TypeName": "integer",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
 											"Properties": {
 												"HIVE_TYPE_STRING": "integer"
 											}
 										}
 									},
 									{
-										"Name": "IsoCountryName",
+										"Name": "ProductName",
 										"Description": "",
 										"OriginDataTypeName": {
 											"TypeName": "string",
-											"IsNullable": false,
 											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "ItemSku",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "ProductColor",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
 											"Length": 256,
 											"Properties": {
 												"HIVE_TYPE_STRING": "string"
@@ -7290,13 +6602,13 @@
 									"FormatType": "parquet",
 									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
 									"Properties": {
-										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Country",
+										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Product",
 										"FormatTypeSetToDatabaseDefault": true
 									}
 								},
 								"Source": {
 									"Provider": "ADLS",
-									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Country",
+									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Product",
 									"Properties": {
 										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
 										"LocationSetToDatabaseDefault": true
@@ -7313,13 +6625,531 @@
 							"Properties": {
 								"Description": "",
 								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
-								"PrimaryKeys": "CountryId",
+								"PrimaryKeys": "ProductId",
 								"spark.sql.sources.provider": "parquet"
 							},
 							"Retention": 0,
 							"Temporary": false,
-							"IsRewriteEnabled": false,
-							"Partitioning": {}
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "adworkstarget"
+							},
+							"Name": "ProductDimCategory",
+							"Description": "",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "ProductId",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "Model",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "Category",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "Subcategory",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+									"FormatType": "parquet",
+									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+									"Properties": {
+										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/ProductDimCategory",
+										"FormatTypeSetToDatabaseDefault": true
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/ProductDimCategory",
+									"Properties": {
+										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"Description": "",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"PrimaryKeys": "ProductId",
+								"spark.sql.sources.provider": "parquet"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "adworkstarget"
+							},
+							"Name": "Territory",
+							"Description": "",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "TerritoryId",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "Group",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "Country",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "Region",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+									"FormatType": "parquet",
+									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+									"Properties": {
+										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Territory",
+										"FormatTypeSetToDatabaseDefault": true
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Territory",
+									"Properties": {
+										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"Description": "",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"PrimaryKeys": "TerritoryId",
+								"spark.sql.sources.provider": "parquet"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "adworkstarget"
+							},
+							"Name": "Transaction",
+							"Description": "",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "TransactionId",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "CustomerId",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "ChannelId",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+									"FormatType": "parquet",
+									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+									"Properties": {
+										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Transaction",
+										"FormatTypeSetToDatabaseDefault": true
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/Transaction",
+									"Properties": {
+										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"Description": "",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"PrimaryKeys": "TransactionId",
+								"spark.sql.sources.provider": "parquet"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "adworkstarget"
+							},
+							"Name": "TransactionLineItem",
+							"Description": "",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "TransactionId",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "TransactionLineItemId",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "ProductId",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "Quantity",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										}
+									},
+									{
+										"Name": "ProductListPriceAmount",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										}
+									},
+									{
+										"Name": "TransactionProductPriceAmount",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										}
+									},
+									{
+										"Name": "TotalTransactionLineItemAmount",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										}
+									},
+									{
+										"Name": "TotalTransactionSalesPriceAmount",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										}
+									},
+									{
+										"Name": "ProductPriceAdjustmentPercentage",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										}
+									},
+									{
+										"Name": "OrderDateKey",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "DueDateKey",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									},
+									{
+										"Name": "ShipDateKey",
+										"Description": "",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+									"FormatType": "parquet",
+									"SerializeLib": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe",
+									"Properties": {
+										"path": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/TransactionLineItem",
+										"FormatTypeSetToDatabaseDefault": true
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://gold@vvssjupq6khjbr7mpoc.dfs.core.windows.net/adworkstarget/TransactionLineItem",
+									"Properties": {
+										"LinkedServiceName": "vvssjupq6khjbr7mpocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"Snappy\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"Description": "",
+								"DisplayFolderInfo": "{\"name\":\"Others\",\"colorCode\":\"\"}",
+								"PrimaryKeys": "TransactionLineItemId",
+								"spark.sql.sources.provider": "parquet"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
 						},
 						"Source": {
 							"Type": "SPARK"
