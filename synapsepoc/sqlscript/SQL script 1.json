@@ -2,12 +2,12 @@
 	"name": "SQL script 1",
 	"properties": {
 		"content": {
-			"query": "SELECT TOP (100) *\n FROM [adworks].[dbo].[CustomerData]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Date]   -- works\n\n\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[ProductData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Reseller]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Sales]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesOrder]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesTerritory]",
+			"query": "SELECT TOP (100) *\n FROM [adworks].[dbo].[CustomerData]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Date]   -- works\n\n\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[ProductData]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Reseller]   -- works\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[Sales]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesOrder]\n\n SELECT TOP (100) *\n FROM [adworks].[dbo].[SalesTerritory]\n\n\n\n\n SELECT COUNT(1)\n FROM [adworkstarget].[dbo].[Channel] \n\n SELECT COUNT(1)\n FROM [adworkstarget].[dbo].[ChannelType] \n \n SELECT COUNT(1)\n FROM [adworkstarget].[dbo].[Country] \n \n SELECT COUNT(1)\n FROM [adworkstarget].[dbo].[Customer] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[IndividualCustomer] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Item] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Location] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Product] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[ProductCategoryDim] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[ProductDimCategory] -- no records\n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Territory] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[Transaction] \n\nSELECT COUNT(1)\nFROM [adworkstarget].[dbo].[TransactionLineItem] \n",
 			"metadata": {
 				"language": "sql"
 			},
 			"currentConnection": {
-				"databaseName": "adworks",
+				"databaseName": "adworkstarget",
 				"poolName": "Built-in"
 			},
 			"resultLimit": 5000
